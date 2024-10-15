@@ -18,8 +18,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/admin', function () {
-    return view('back.index');
+Route::get('/back/login', function () {
+    return view('back.auth.login');
 });
 Route::get('/dashboard', function () {
     return view('dashboard');
