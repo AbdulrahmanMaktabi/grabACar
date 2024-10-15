@@ -24,6 +24,6 @@ require __DIR__ . '/auth.php';
 Route::prefix('back')
     ->name('back.')
     ->group(function () {
-        Route::get('/', BackHomeController::class)->name('index');
+        Route::get('/', BackHomeController::class)->name('index')->middleware('admin');
         require __DIR__ . '/adminAuth.php';
     });
