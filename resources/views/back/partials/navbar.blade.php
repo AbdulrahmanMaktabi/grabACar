@@ -81,10 +81,10 @@
                         <div class="dropdown-divider"></div>
                     </li>
                     <li>
-                        <a class="dropdown-item" href="auth-login-basic.html">
-                            <i class="bx bx-power-off me-2"></i>
-                            <span class="align-middle">Log Out</span>
-                        </a>
+                        <form class="dropdown-item" action="{{ route('back.logout') }}" method="post">
+                            @csrf
+                            <input type="submit" class="btn btn-sm btn-outline-danger" value="Log Out">
+                        </form>
                     </li>
                 </ul>
             </li>
