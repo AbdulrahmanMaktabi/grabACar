@@ -54,6 +54,10 @@ class AdminController extends Controller
      */
     public function show(Admin $admin)
     {
+        // check if the user is seem to be logged in
+        if (Auth::guard('admin')->user()->id != $admin->id) {
+            return redirect()->route('back.index');
+        }
         return view('back.admins.profile', get_defined_vars());
     }
 
