@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Back;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Back\CreatingAdminRequest;
 use App\Models\Admin;
+use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 
 
@@ -25,15 +27,26 @@ class AdminController extends Controller
      */
     public function create()
     {
-        //
+        $roles = Role::where('guard_name', 'admin')->get();
+        return view('back.admins.create', get_defined_vars());
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreatingAdminRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $admin = Admin::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => bcrypt($data['password']),
+        ]);
+
+        $admin->assignRole($data['role']);
+
+        return redirect()->route('back.admin.index');
     }
 
     /**

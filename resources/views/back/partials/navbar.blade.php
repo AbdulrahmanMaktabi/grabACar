@@ -46,8 +46,9 @@
                                     </div>
                                 </div>
                                 <div class="flex-grow-1">
-                                    <span class="fw-semibold d-block">John Doe</span>
-                                    <small class="text-muted">Admin</small>
+                                    <span class="fw-semibold d-block">{{ Auth::guard('admin')->user()->name }}</span>
+                                    <small
+                                        class="text-muted">{{ Auth::guard('admin')->user()->getRoleNames()[0] }}</small>
                                 </div>
                             </div>
                         </a>
