@@ -123,8 +123,20 @@
                  <li class="menu-itme">
                      <a href="#" class="menu-link">Create A Car</a>
                  </li>
+
              </ul>
          </li>
+         <!-- Accoutn -->
+         <li class="menu-header small text-uppercase">
+             Account
+         </li>
+         <li class="menu-item ">
+             <a href="{{ route('back.admin.show', ['admin' => Auth::guard('admin')->user()]) }}" class="menu-link">
+                 <i class="menu-icon tf-icons bx bx-user-circle"></i>
+                 <div data-i18n="Analytics">Profile</div>
+             </a>
+         </li>
+
      </ul>
  </aside>
  <!-- / Menu -->
