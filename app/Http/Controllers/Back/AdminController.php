@@ -12,6 +12,17 @@ use Spatie\Permission\Models\Role;
 
 class AdminController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            $auth = Auth::guard('admin')->user();
+            if (!$auth->hasRole('Super Admin')) {
+                return $next($request);
+            } else {
+                return redirect()->route('back.admin.index');
+            }
+        })->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -80,8 +91,20 @@ class AdminController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request, Admin $admin)
     {
-        //
+        $checkox = $request->validate(
+            [
+                'accountActivation' => 'required',
+            ]
+        );
+
+        // remove the roles from the account
+        $admin->syncRoles(['']);
+
+        // delete the account
+        $admin->delete();
+
+        return redirect()->route('back.admin.index');
     }
 }

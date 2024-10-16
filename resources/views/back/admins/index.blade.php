@@ -32,8 +32,10 @@
                                     </td>
                                     <td><span class="badge bg-label-primary me-1">{{ $admin->getRoleNames()[0] }}</span></td>
                                     <td>
-                                        <a href="" class="btn btn-sm btn-warning">Edit</a>
-                                        <a href="" class="btn btn-sm btn-danger">Delete</a>
+                                        @if (!$admin->hasRole('Super Admin'))
+                                            <a href="" class="btn btn-sm btn-warning">Edit</a>
+                                            <a href="" class="btn btn-sm btn-danger">Delete</a>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach
