@@ -28,7 +28,7 @@ class AdminController extends Controller
      */
     public function index()
     {
-        $roles = Role::where('guard_name', 'admin')->get();
+
         $admins = Admin::paginate(5);
         return view('back.admins.index', get_defined_vars());
     }
@@ -38,7 +38,7 @@ class AdminController extends Controller
      */
     public function create()
     {
-        $roles = Role::where('guard_name', 'admin')->get();
+
         return view('back.admins.create', get_defined_vars());
     }
 
@@ -75,17 +75,45 @@ class AdminController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Admin $admin)
     {
-        //
+        if (isSuperAdmin() || isSameUser($admin->id)) {
+
+            return view('back.admins.edit', get_defined_vars());
+        } else {
+            return abort(404);
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Admin $admin)
     {
-        //
+        $data = $request->validate([
+            'name' => ['string', 'max:255'],
+            'email' => ['string', 'email', 'max:255', 'unique:admins,email,' . $admin->id],
+            'password' => ['nullable', 'string', 'min:8', 'confirmed'],
+            'password_confirmation' => 'nullable|string|same:password',
+            'role' => ['exists:roles,name'],
+        ]);
+
+        $admin->update(
+            [
+                'name' => $data['name'],
+                'email' => $data['email']
+            ]
+        );
+
+        if ($request->filled('password')) {
+            $admin->update(['password' => bcrypt($data['password'])]);
+        }
+
+        if ($request->filled('role')) {
+            $admin->syncRoles([$data['role']]);
+        }
+
+        return redirect()->route('back.admin.index');
     }
 
     /**
@@ -93,18 +121,16 @@ class AdminController extends Controller
      */
     public function destroy(Request $request, Admin $admin)
     {
-        $checkox = $request->validate(
-            [
-                'accountActivation' => 'required',
-            ]
-        );
+        if (isSuperAdmin() || isSameUser($admin->id)) {
+            // remove the roles from the account
+            $admin->syncRoles(['']);
 
-        // remove the roles from the account
-        $admin->syncRoles(['']);
+            // delete the account
+            $admin->delete();
 
-        // delete the account
-        $admin->delete();
-
-        return redirect()->route('back.admin.index');
+            return redirect()->route('back.admin.index');
+        } else {
+            return abort(404);
+        }
     }
 }

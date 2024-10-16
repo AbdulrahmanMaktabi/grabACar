@@ -33,8 +33,36 @@
                                     <td><span class="badge bg-label-primary me-1">{{ $admin->getRoleNames()[0] }}</span></td>
                                     <td>
                                         @if (!$admin->hasRole('Super Admin'))
-                                            <a href="" class="btn btn-sm btn-warning">Edit</a>
-                                            <a href="" class="btn btn-sm btn-danger">Delete</a>
+                                            <!-- Button group for Edit and Deactivate -->
+                                            <div class="d-flex align-items-center">
+                                                @if (isSuperAdmin() || isSameUser($admin->id))
+                                                    <!-- Edit Button -->
+                                                    <a href="{{ route('back.admin.edit', ['admin' => $admin]) }}"
+                                                        class="btn btn-sm btn-warning me-2">
+                                                        Edit
+                                                    </a>
+                                                @endif
+                                                @if (isSuperAdmin())
+                                                    {{-- Delete Button --}}
+                                                    <form action="{{ route('back.admin.destroy', ['admin' => $admin]) }}"
+                                                        method="post">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <input class="btn btn-sm btn-danger me-2" type="submit"
+                                                            value="Delete">
+                                                        @if ($errors->any())
+                                                            <div class="alert alert-danger">
+                                                                <ul>
+                                                                    @foreach ($errors->all() as $error)
+                                                                        <li>{{ $error }}</li>
+                                                                    @endforeach
+                                                                </ul>
+                                                            </div>
+                                                        @endif
+                                                    </form>
+                                                @endif
+
+                                            </div>
                                         @endif
                                     </td>
                                 </tr>
