@@ -59,84 +59,24 @@
 
      <ul class="menu-inner py-1">
          <!-- Dashboard -->
-         <li class="menu-item ">
-             <a href="{{ route('back.index') }}" class="menu-link">
-                 <i class="menu-icon tf-icons bx bx-home-circle"></i>
-                 <div data-i18n="Analytics">Dashboard</div>
-             </a>
-         </li>
+         <x-side-bar-btn :route="route('back.index')" title="Dashboard"></x-side-bar-btn>
          <!-- Admins -->
-         <li class="menu-item ">
-             <a href="index.html" class="menu-link menu-toggle">
-                 <i class="menu-icon tf-icons bx bxl-php"></i>
-                 <div data-i18n="Analytics">Admins Settings</div>
-             </a>
-             <ul class="menu-sub">
-                 <li class="menu-itme">
-                     <a href="{{ route('back.admin.index') }}" class="menu-link">Admins</a>
-                 </li>
-                 <li class="menu-itme">
-                     <a href="{{ route('back.admin.create') }}" class="menu-link">Create A Admin</a>
-                 </li>
-             </ul>
-         </li>
+         <x-sidebar-btn--toggle title="Admins" :indexRoute="route('back.admin.index')" :createRoute="route('back.admin.create')" icon="bxl-php">
+         </x-sidebar-btn--toggle>
          <!-- Users -->
-         <li class="menu-item ">
-             <a href="index.html" class="menu-link menu-toggle">
-                 <i class="menu-icon tf-icons bx bx-user"></i>
-                 <div data-i18n="Analytics">Users Settings</div>
-             </a>
-             <ul class="menu-sub">
-                 <li class="menu-itme">
-                     <a href="#" class="menu-link">Users</a>
-                 </li>
-                 <li class="menu-itme">
-                     <a href="#" class="menu-link">Create A User</a>
-                 </li>
-             </ul>
-         </li>
+         <x-sidebar-btn--toggle title="Users" :indexRoute="route('back.user.index')" :createRoute="route('back.user.create')" icon="bx-user">
+         </x-sidebar-btn--toggle>
          <!-- Roles -->
-         <li class="menu-item ">
-             <a href="index.html" class="menu-link menu-toggle">
-                 <i class="menu-icon tf-icons bx bx-lock-alt"></i>
-                 <div data-i18n="Analytics">Roles Settings</div>
-             </a>
-             <ul class="menu-sub">
-                 <li class="menu-itme">
-                     <a href="#" class="menu-link">Roles</a>
-                 </li>
-                 <li class="menu-itme">
-                     <a href="#" class="menu-link">Create A Role</a>
-                 </li>
-             </ul>
-         </li>
+         <x-sidebar-btn--toggle title="Roles" indexRoute="#" createRoute="#" icon="bx-lock">
+         </x-sidebar-btn--toggle>
          <!-- Cars -->
-         <li class="menu-item ">
-             <a href="index.html" class="menu-link menu-toggle">
-                 <i class="menu-icon tf-icons bx bx-car"></i>
-                 <div data-i18n="Analytics">Cars Settings</div>
-             </a>
-             <ul class="menu-sub">
-                 <li class="menu-itme">
-                     <a href="#" class="menu-link">Cars</a>
-                 </li>
-                 <li class="menu-itme">
-                     <a href="#" class="menu-link">Create A Car</a>
-                 </li>
-
-             </ul>
-         </li>
+         <x-sidebar-btn--toggle title="Cars" indexRoute="#" createRoute="#" icon="bx-car">
+         </x-sidebar-btn--toggle>
          <!-- Accoutn -->
          <li class="menu-header small text-uppercase">
              Account
          </li>
-         <li class="menu-item ">
-             <a href="{{ route('back.admin.show', ['admin' => Auth::guard('admin')->user()]) }}" class="menu-link">
-                 <i class="menu-icon tf-icons bx bx-user-circle"></i>
-                 <div data-i18n="Analytics">Profile</div>
-             </a>
-         </li>
-
+         <x-side-bar-btn :route="route('back.admin.show', ['admin' => Auth::guard('admin')->user()])" title="Profile"></x-side-bar-btn>
      </ul>
  </aside>
  <!-- / Menu -->
