@@ -64,10 +64,10 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Admin $admin)
+    public function show(User $user)
     {
         // check if the user is seem to be logged in
-        if (Auth::guard('admin')->user()->id != $admin->id) {
+        if (Auth::guard('web')->user()->id != $user->id) {
             return redirect()->route('back.index');
         }
         return view('back.admins.profile', get_defined_vars());

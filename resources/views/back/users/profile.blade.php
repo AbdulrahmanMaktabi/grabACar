@@ -18,24 +18,24 @@
                         <div class="mb-3 col-md-6">
                             <label for="firstName" class="form-label">Full Name</label>
                             <input disabled class="form-control" type="text" id="firstName" name="firstName"
-                                value="{{ $admin->name }}" autofocus />
+                                value="{{ $user->name }}" autofocus />
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="email" class="form-label">E-mail</label>
                             <input disabled class="form-control" type="text" id="email" name="email"
-                                value="{{ $admin->email }}" placeholder="john.doe@example.com" />
+                                value="{{ $user->email }}" placeholder="john.doe@example.com" />
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="text" class="form-label">Role</label>
-                            <input disabled class="form-control" type="text" id="role" name="role"
-                                value="{{ $admin->getRoleNames()[0] }}" placeholder="Role" />
+                            <input disabled class="form-control" type="text" id="role" name="role" value="Editor"
+                                placeholder="Role" />
                         </div>
                     </div>
                     {{-- </form> --}}
                 </div>
                 <!-- /Account -->
             </div>
-            @if (!$admin->hasRole('Super Admin'))
+            {{-- @if (isSameUser('web', $user))
                 <div class="card">
                     <h5 class="card-header">Delete Account</h5>
                     <div class="card-body">
@@ -47,7 +47,7 @@
                             </div>
                         </div>
                         <form id="formAccountDeactivation" method="POST"
-                            action="{{ route('back.admin.destroy', ['admin' => $admin]) }}">
+                            action="{{ route('front.user.destroy', ['user' => $user]) }}">
                             @method('delete')
                             @csrf
                             <div class="form-check mb-3">
@@ -61,7 +61,7 @@
                         </form>
                     </div>
                 </div>
-            @endif
+            @endif --}}
         </div>
     </div>
 @endsection

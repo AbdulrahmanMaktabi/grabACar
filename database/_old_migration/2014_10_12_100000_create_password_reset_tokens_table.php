@@ -11,21 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (!Schema::hasColumn('admins', 'slug')) {
-            Schema::table('admins', function (Blueprint $table) {
-                $table->string('slug')->nullable()->after('email');
-            });
-        }
+        Schema::create('password_reset_tokens', function (Blueprint $table) {
+            $table->string('email')->primary();
+            $table->string('token');
+            $table->timestamp('created_at')->nullable();
+        });
     }
-
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::table('admins', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('password_reset_tokens');
     }
 };

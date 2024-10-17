@@ -59,7 +59,7 @@
 
      <ul class="menu-inner py-1">
          <!-- Dashboard -->
-         <x-side-bar-btn :route="route('back.index')" title="Dashboard"></x-side-bar-btn>
+         <x-side-bar-btn :route="route('front.index')" title="Dashboard"></x-side-bar-btn>
          <!-- Cars -->
          <x-sidebar-btn--toggle title="Cars" indexRoute="#" createRoute="#" icon="bx-car">
          </x-sidebar-btn--toggle>
