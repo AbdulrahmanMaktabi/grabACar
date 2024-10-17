@@ -9,7 +9,7 @@
                 </li>
             </ul>
             <div class="card mb-4">
-                <h5 class="card-header">Profile Details</h5>
+                <h5 class="card-header">User Details</h5>
                 <!-- Account -->
                 <hr class="my-0" />
                 <div class="card-body">
@@ -25,43 +25,18 @@
                             <input disabled class="form-control" type="text" id="email" name="email"
                                 value="{{ $user->email }}" placeholder="john.doe@example.com" />
                         </div>
-                        <div class="mb-3 col-md-6">
-                            <label for="text" class="form-label">Role</label>
-                            <input disabled class="form-control" type="text" id="role" name="role" value="Editor"
-                                placeholder="Role" />
-                        </div>
+                        @if (count($user->getRoleNames('web')) > 0)
+                            <div class="mb-3 col-md-6">
+                                <label for="text" class="form-label">Role</label>
+                                <input disabled class="form-control" type="text" id="role" name="role"
+                                    value="{{ $user->getRoleNames('web')[0] }}" placeholder="Role" />
+                            </div>
+                        @endif
                     </div>
                     {{-- </form> --}}
                 </div>
                 <!-- /Account -->
             </div>
-            {{-- @if (isSameUser('web', $user))
-                <div class="card">
-                    <h5 class="card-header">Delete Account</h5>
-                    <div class="card-body">
-                        <div class="mb-3 col-12 mb-0">
-                            <div class="alert alert-warning">
-                                <h6 class="alert-heading fw-bold mb-1">Are you sure you want to delete your account?</h6>
-                                <p class="mb-0">Once you delete your account, there is no going back. Please be certain.
-                                </p>
-                            </div>
-                        </div>
-                        <form id="formAccountDeactivation" method="POST"
-                            action="{{ route('front.user.destroy', ['user' => $user]) }}">
-                            @method('delete')
-                            @csrf
-                            <div class="form-check mb-3">
-                                <input class="form-check-input" type="checkbox" name="accountActivation"
-                                    id="accountActivation" />
-                                <label class="form-check-label" for="accountActivation">I confirm my account
-                                    deactivation</label>
-                                <x-input-error :messages="$errors->get('accountActivation')" class="mt-2" />
-                            </div>
-                            <button type="submit" class="btn btn-danger deactivate-account">Deactivate Account</button>
-                        </form>
-                    </div>
-                </div>
-            @endif --}}
         </div>
     </div>
 @endsection

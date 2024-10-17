@@ -67,21 +67,21 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Admin $admin)
+    public function show(User $user)
     {
         // check if the user is seem to be logged in
-        if (Auth::guard('admin')->user()->id != $admin->id) {
-            return redirect()->route('back.index');
+        if (Auth::guard('admin')->user()->hasAnyRole(['Super Admin', 'Admin'])) {
+            return view('back.users.profile', get_defined_vars());
         }
-        return view('back.admins.profile', get_defined_vars());
+        return redirect()->route('back.index');
     }
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Admin $admin)
+    public function edit(User $user)
     {
-        if (isSuperAdmin() || isSameUser('admin', $admin->id)) {
-            return view('back.admins.edit', get_defined_vars());
+        if (isSuperAdmin() || isSameUser('web', $user->id)) {
+            return view('back.users.edit', get_defined_vars());
         } else {
             return abort(404);
         }
@@ -89,40 +89,40 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Admin $admin)
+    public function update(Request $request, User $user)
     {
         $data = $request->validate([
             'name' => ['string', 'max:255'],
-            'email' => ['string', 'email', 'max:255', 'unique:admins,email,' . $admin->id],
+            'email' => ['string', 'email', 'max:255', 'unique:users,email,' . $user->id],
             'password' => ['nullable', 'string', 'min:8', 'confirmed'],
             'password_confirmation' => 'nullable|string|same:password',
             'role' => ['exists:roles,name'],
         ]);
-        $admin->update(
+        $user->update(
             [
                 'name' => $data['name'],
                 'email' => $data['email']
             ]
         );
         if ($request->filled('password')) {
-            $admin->update(['password' => bcrypt($data['password'])]);
+            $user->update(['password' => bcrypt($data['password'])]);
         }
         if ($request->filled('role')) {
-            $admin->syncRoles([$data['role']]);
+            $user->syncRoles([$data['role']]);
         }
-        return redirect()->route('back.admin.index');
+        return redirect()->route('back.user.index');
     }
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Request $request, Admin $admin)
+    public function destroy(Request $request, User $user)
     {
-        if (isSuperAdmin() || isSameUser('admin', $admin->id)) {
+        if (isSuperAdmin() || isSameUser('web', $user->id)) {
             // remove the roles from the account
-            $admin->syncRoles(['']);
+            $user->syncRoles(['']);
             // delete the account
-            $admin->delete();
-            return redirect()->route('back.admin.index');
+            $user->delete();
+            return redirect()->route('back.user.index');
         } else {
             return abort(404);
         }

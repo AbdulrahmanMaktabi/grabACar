@@ -67,8 +67,8 @@
          <li class="menu-header small text-uppercase">
              Account
          </li>
-         <x-side-bar-btn route="#" title="Profile"></x-side-bar-btn>
-         {{-- <x-side-bar-btn :route="route('front.user.show', ['user' => Auth::guard('web')->user()])" title="Profile"></x-side-bar-btn> --}}
+         {{-- <x-side-bar-btn route="#" title="Profile"></x-side-bar-btn> --}}
+         <x-side-bar-btn :route="route('back.user.show', ['user' => Auth::guard('web')->user()])" title="Profile"></x-side-bar-btn>
      </ul>
  </aside>
  <!-- / Menu -->

@@ -35,14 +35,19 @@
                                 <td>
                                     <!-- Assuming this admin is not a Super Admin -->
                                     <div class="d-flex align-items-center">
+                                        <!-- Show Button -->
+                                        <a href="{{ route('back.user.show', ['user' => $user]) }}"
+                                            class="btn btn-sm btn-success me-2">
+                                            Show
+                                        </a>
                                         <!-- Edit Button -->
-                                        <a href="edit-admin-url" class="btn btn-sm btn-warning me-2">
+                                        <a href="{{ route('back.user.edit', ['user' => $user]) }}"
+                                            class="btn btn-sm btn-warning me-2">
                                             Edit
                                         </a>
                                         <!-- Delete Button -->
-                                        <form action="delete-admin-url" method="post">
-                                            <input type="hidden" name="_token" value="csrf_token_here">
-                                            <!-- Replace with actual CSRF token -->
+                                        <form action="{{ route('back.user.destroy', ['user' => $user]) }}" method="post">
+                                            @csrf
                                             <input type="hidden" name="_method" value="DELETE">
                                             <input class="btn btn-sm btn-danger me-2" type="submit" value="Delete">
                                         </form>
