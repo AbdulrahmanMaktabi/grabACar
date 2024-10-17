@@ -3,9 +3,9 @@
 @section('content')
     <div class="col-md-12">
         <div class="card mb-4">
-            <h5 class="card-header">Create Admin</h5>
+            <h5 class="card-header">Create User</h5>
             <div class="card-body">
-                <form action="{{ route('back.admin.store') }}" method="post">
+                <form action="{{ route('back.user.store') }}" method="post">
                     @csrf
                     <div class="row my-4">
                         <div class="col-md-6">
@@ -41,11 +41,9 @@
                             <label for="exampleFormControlSelect1" class="form-label">Roles</label>
                             <select class="form-select" id="exampleFormControlSelect1" aria-label="Default select example"
                                 name="role">
-                                <option>Role</option>
-                                @foreach ($roles as $role)
-                                    @if ($role->name != 'Super Admin')
-                                        <option value="{{ $role->name }}">{{ $role->name }}</option>
-                                    @endif
+                                <option></option>
+                                @foreach ($web_roles as $role)
+                                    <option value="{{ $role->name }}">{{ $role->name }}</option>
                                 @endforeach
                             </select>
                             @error('role')

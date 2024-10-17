@@ -16,57 +16,50 @@
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
-                    @if (isset($roles) && isset($users))
-                        @if (count($users) > 0)
-                            @foreach ($users as $user)
-                                <tr>
-                                    <td>
-                                        <i class="fab fa-angular fa-lg text-danger me-3"></i>
-                                        <strong>
-                                            {{ $loop->iteration }}
-                                        </strong>
-                                    </td>
-                                    <td>{{ $user->name }}</td>
-                                    <td>
-                                        {{ $user->email }}
-                                    </td>
-                                    <td><span class="badge bg-label-primary me-1">{{ $user->getRoleNames()[0] }}</span></td>
-                                    <td>
-                                        <!-- Button group for Edit and Deactivate -->
-                                        <div class="d-flex align-items-center">
-                                            @if (isSuperAdmin() || isSameUser('web', $user->id))
-                                                <!-- Edit Button -->
-                                                <a href="{{ route('back.admin.edit', ['user' => $user]) }}"
-                                                    class="btn btn-sm btn-warning me-2">
-                                                    Edit
-                                                </a>
-                                            @endif
-                                            {{-- Delete Button --}}
-                                            <form action="{{ route('back.admin.destroy', ['user' => $user]) }}"
-                                                method="post">
-                                                @csrf
-                                                @method('delete')
-                                                <input class="btn btn-sm btn-danger me-2" type="submit" value="Delete">
-                                                @if ($errors->any())
-                                                    <div class="alert alert-danger">
-                                                        <ul>
-                                                            @foreach ($errors->all() as $error)
-                                                                <li>{{ $error }}</li>
-                                                            @endforeach
-                                                        </ul>
-                                                    </div>
-                                                @endif
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        @else
-                            <h1>no data</h1>
-                        @endif
+                    @if (isset($users) && count($users) > 0)
+                        @foreach ($users as $user)
+                            <tr>
+                                <td>
+                                    <i class="fab fa-angular fa-lg text-danger me-3"></i>
+                                    <strong>{{ $loop->iteration + ($users->firstItem() - 1) }}</strong>
+                                    <!-- Replace with the actual iteration number if needed -->
+                                </td>
+                                <td>{{ $user->name }}</td> <!-- Replace with actual admin name -->
+                                <td>{{ $user->email }}</td> <!-- Replace with actual admin email -->
+                                <td>
+                                    <span class="badge bg-label-primary me-1">
+                                        {{ $user->hasVerifiedEmail() ? 'Editro' : 'Not Verified' }}
+                                    </span>
+                                </td>
+                                <!-- Replace with actual role -->
+                                <td>
+                                    <!-- Assuming this admin is not a Super Admin -->
+                                    <div class="d-flex align-items-center">
+                                        <!-- Edit Button -->
+                                        <a href="edit-admin-url" class="btn btn-sm btn-warning me-2">
+                                            Edit
+                                        </a>
+                                        <!-- Delete Button -->
+                                        <form action="delete-admin-url" method="post">
+                                            <input type="hidden" name="_token" value="csrf_token_here">
+                                            <!-- Replace with actual CSRF token -->
+                                            <input type="hidden" name="_method" value="DELETE">
+                                            <input class="btn btn-sm btn-danger me-2" type="submit" value="Delete">
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @else
+                        <h1>no</h1>
                     @endif
                 </tbody>
             </table>
+            <div class="container mt-4">
+                {{ $users->links('pagination::bootstrap-5') }}
+
+            </div>
+
         </div>
     </div>
     <!--/ Basic Bootstrap Table -->

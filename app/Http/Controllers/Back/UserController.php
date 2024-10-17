@@ -10,7 +10,6 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 
-
 class UserController extends Controller
 {
     public function __construct()
@@ -29,63 +28,64 @@ class UserController extends Controller
      */
     public function index()
     {
-
-        $admins = User::paginate(5);
+        $users = User::paginate(5);
         return view('back.users.index', get_defined_vars());
     }
-
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-
-        return view('back.admins.create', get_defined_vars());
+        return view('back.users.create', get_defined_vars());
     }
-
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CreatingAdminRequest $request)
+    public function store(Request $request)
     {
-        $data = $request->validated();
-
-        $admin = Admin::create([
+        $data = $request->validate(
+            [
+                'name' => 'required|string|max:255',
+                'email' => 'required|string|email|max:255|unique:users',
+                'password' => 'required|string|min:8|confirmed',
+                'password_confirmation' => 'required|string|same:password',
+                'role' => 'nullable|exists:roles,name',
+            ]
+        );
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
 
-        $admin->assignRole($data['role']);
+        if (isset($data['role'])) {
+            $user->syncRoles($data['role']);
+        }
 
-        return redirect()->route('back.admin.index');
+        return redirect()->route('back.user.index');
     }
-
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show(Admin $admin)
     {
         // check if the user is seem to be logged in
-        if (Auth::guard('web')->user()->id != $user->id) {
+        if (Auth::guard('admin')->user()->id != $admin->id) {
             return redirect()->route('back.index');
         }
         return view('back.admins.profile', get_defined_vars());
     }
-
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(Admin $admin)
     {
         if (isSuperAdmin() || isSameUser('admin', $admin->id)) {
-
             return view('back.admins.edit', get_defined_vars());
         } else {
             return abort(404);
         }
     }
-
     /**
      * Update the specified resource in storage.
      */
@@ -98,25 +98,20 @@ class UserController extends Controller
             'password_confirmation' => 'nullable|string|same:password',
             'role' => ['exists:roles,name'],
         ]);
-
         $admin->update(
             [
                 'name' => $data['name'],
                 'email' => $data['email']
             ]
         );
-
         if ($request->filled('password')) {
             $admin->update(['password' => bcrypt($data['password'])]);
         }
-
         if ($request->filled('role')) {
             $admin->syncRoles([$data['role']]);
         }
-
         return redirect()->route('back.admin.index');
     }
-
     /**
      * Remove the specified resource from storage.
      */
@@ -125,10 +120,8 @@ class UserController extends Controller
         if (isSuperAdmin() || isSameUser('admin', $admin->id)) {
             // remove the roles from the account
             $admin->syncRoles(['']);
-
             // delete the account
             $admin->delete();
-
             return redirect()->route('back.admin.index');
         } else {
             return abort(404);
