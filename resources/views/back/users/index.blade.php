@@ -12,6 +12,7 @@
                         <th>Name</th>
                         <th>Email</th>
                         <th>Role</th>
+                        <th>Verified</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -27,9 +28,27 @@
                                 <td>{{ $user->name }}</td> <!-- Replace with actual admin name -->
                                 <td>{{ $user->email }}</td> <!-- Replace with actual admin email -->
                                 <td>
-                                    <span class="badge bg-label-primary me-1">
-                                        {{ $user->hasVerifiedEmail() ? 'Editro' : 'Not Verified' }}
-                                    </span>
+                                    @if (count($user->getRoleNames('web')) > 0)
+                                        <span class="badge bg-label-primary me-1">
+                                            {{ $user->getRoleNames('web')[0] }}
+                                        </span>
+                                    @else
+                                        <span class="badge bg-label-warning me-1">
+                                            No Roles
+                                        </span>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if ($user->hasVerifiedEmail())
+                                        <span class="badge bg-label-success me-1">
+                                            Verified
+                                        </span>
+                                    @else
+                                        <span class="badge bg-label-danger me-1">
+
+                                            Not Verified
+                                        </span>
+                                    @endif
                                 </td>
                                 <!-- Replace with actual role -->
                                 <td>
