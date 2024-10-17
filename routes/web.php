@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Back\AdminController;
 use App\Http\Controllers\Back\BackHomeController;
+use App\Http\Controllers\Back\UserController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -27,5 +28,6 @@ Route::prefix('back')
     ->group(function () {
         Route::get('/', BackHomeController::class)->name('index')->middleware('admin');
         Route::resource('admin', AdminController::class)->middleware('admin');
+        Route::resource('user', UserController::class)->middleware('admin');
         require __DIR__ . '/adminAuth.php';
     });

@@ -22,6 +22,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        View::share('roles', Role::where('guard_name', 'admin')->get());
+        View::share('admin_roles', Role::where('guard_name', 'admin')->get());
+        View::share('web_roles', Role::where('guard_name', 'web')->get());
     }
 }

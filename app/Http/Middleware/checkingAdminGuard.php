@@ -20,6 +20,6 @@ class checkingAdminGuard
             return $next($request);
         }
 
-        return abort(403);
+        return redirect()->route('back.login');
     }
 }

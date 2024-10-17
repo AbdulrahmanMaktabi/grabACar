@@ -16,7 +16,7 @@
                     </tr>
                 </thead>
                 <tbody class="table-border-bottom-0">
-                    @if (isset($roles) && isset($admins))
+                    @if (isset($admin_roles) && isset($admins))
                         @if (count($admins) > 0)
                             @foreach ($admins as $admin)
                                 <tr>
@@ -35,7 +35,7 @@
                                         @if (!$admin->hasRole('Super Admin'))
                                             <!-- Button group for Edit and Deactivate -->
                                             <div class="d-flex align-items-center">
-                                                @if (isSuperAdmin() || isSameUser($admin->id))
+                                                @if (isSuperAdmin() || isSameUser('admin', $admin->id))
                                                     <!-- Edit Button -->
                                                     <a href="{{ route('back.admin.edit', ['admin' => $admin]) }}"
                                                         class="btn btn-sm btn-warning me-2">

@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Auth;
 
-function isSameUser($id)
+function isSameUser($guard, $id)
 {
-    return Auth::guard('admin')->user()->id == $id;
+    return Auth::guard($guard)->user()->id == $id;
 }

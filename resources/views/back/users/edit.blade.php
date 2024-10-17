@@ -43,7 +43,7 @@
                             <select class="form-select" id="exampleFormControlSelect1" aria-label="Default select example"
                                 name="role">
                                 <option>Role</option>
-                                @foreach ($admin_roles as $role)
+                                @foreach ($roles as $role)
                                     @if ($role->name != 'Super Admin')
                                         <option {{ $admin->getRoleNames()[0] == $role->name ? 'selected' : '' }}
                                             value="{{ $role->name }}">{{ $role->name }}</option>

@@ -6,22 +6,23 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Back\CreatingAdminRequest;
 use App\Models\Admin;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
 
 
-class AdminController extends Controller
+class UserController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(function ($request, $next) {
-            $auth = Auth::guard('admin')->user();
-            if (!$auth->hasRole('Super Admin')) {
-                return $next($request);
-            } else {
-                return redirect()->route('back.admin.index');
-            }
-        })->only('destroy');
+        // $this->middleware(function ($request, $next) {
+        //     $auth = Auth::guard('admin')->user();
+        //     if (!$auth->hasRole('Super Admin')) {
+        //         return $next($request);
+        //     } else {
+        //         return redirect()->route('back.admin.index');
+        //     }
+        // })->only('destroy');
     }
     /**
      * Display a listing of the resource.
@@ -29,8 +30,8 @@ class AdminController extends Controller
     public function index()
     {
 
-        $admins = Admin::paginate(5);
-        return view('back.admins.index', get_defined_vars());
+        $admins = User::paginate(5);
+        return view('back.users.index', get_defined_vars());
     }
 
     /**
