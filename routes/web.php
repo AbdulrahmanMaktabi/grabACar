@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Back\AdminController;
 use App\Http\Controllers\Back\BackHomeController;
+use App\Http\Controllers\Back\RoleController;
 use App\Http\Controllers\Back\UserController;
 use App\Http\Controllers\Front\FrontHomeController;
 use App\Http\Controllers\ProfileController;
@@ -37,5 +38,6 @@ Route::prefix('back')
         Route::get('/', BackHomeController::class)->name('index')->middleware('admin');
         Route::resource('admin', AdminController::class)->middleware('admin');
         Route::resource('user', UserController::class)->middleware('admin');
+        Route::resource('role', RoleController::class)->middleware('admin');
         require __DIR__ . '/adminAuth.php';
     });
