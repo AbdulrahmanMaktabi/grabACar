@@ -3,6 +3,7 @@
 use App\Http\Controllers\Back\AdminController;
 use App\Http\Controllers\Back\BackHomeController;
 use App\Http\Controllers\Back\UserController;
+use App\Http\Controllers\Front\FrontHomeController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,10 +20,17 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
+// Front Dashboard
+Route::prefix('dashboard')
+    ->name('front.')
+    ->group(function () {
+        Route::get('/', FrontHomeController::class)->name('index')->middleware('auth');
+    });
 require __DIR__ . '/auth.php';
 
+// Back Dashboard
 Route::prefix('back')
     ->name('back.')
     ->group(function () {
