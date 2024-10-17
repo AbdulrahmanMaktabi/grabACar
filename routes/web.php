@@ -18,15 +18,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+// Route::get('/', function () {
+//     return view('front.index');
+// })->name('home')->middleware('auth');
 
 // Front Dashboard
 Route::prefix('dashboard')
     ->name('front.')
     ->group(function () {
-        Route::get('/', FrontHomeController::class)->name('index')->middleware('auth');
+        Route::get('/', FrontHomeController::class)->name('index')->middleware(['auth', 'verified']);
     });
 require __DIR__ . '/auth.php';
 

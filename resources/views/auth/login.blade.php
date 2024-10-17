@@ -147,7 +147,12 @@
                                 <button class="btn btn-primary d-grid w-100" type="submit">Sign in</button>
                             </div>
                         </form>
-
+                        <p class="text-center">
+                            <span>New on our platform?</span>
+                            <a href="{{ route('register') }}">
+                                <span>Create an account</span>
+                            </a>
+                        </p>
                     </div>
                 </div>
                 <!-- /Register -->
@@ -176,6 +181,10 @@
 
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+    @if (session('emailVerifyRequired'))
+        <x-message :message="session('emailVerifyRequired')"></x-message>
+    @endif
 </body>
 
 </html>

@@ -21,10 +21,10 @@ class RedirectIfAuthenticated
 
         foreach ($guards as $guard) {
             if (Auth::guard($guard)->check()) {
-                if ($guard == 'web') {
-                    return redirect(RouteServiceProvider::HomeForFront);
-                } else {
-                    return redirect(RouteServiceProvider::HomeForBack);
+                if ($guard === 'web') {
+                    return redirect()->route('front.index');  // Front dashboard route
+                } elseif ($guard === 'admin') {
+                    return redirect()->route('back.index');  // Admin dashboard route
                 }
             }
         }
