@@ -1,13 +1,11 @@
 @extends('back.master')
-
+@php
+    use App\Models\Admin;
+@endphp
 @section('content')
     <div class="row">
         <div class="col-md-12">
-            <ul class="nav nav-pills flex-column flex-md-row mb-3">
-                <li class="nav-item">
-                    <span class="nav-link active"><i class="bx bx-user me-1"></i> Account</span>
-                </li>
-            </ul>
+
             <div class="card mb-4">
                 <h5 class="card-header">Role Details</h5>
                 <!-- Account -->
@@ -28,7 +26,58 @@
                     </div>
                     {{-- </form> --}}
                 </div>
-                <!-- /Account -->
+                @if (count($role->permissions) > 0)
+                    {{-- role permissions --}}
+                    <h5 class="card-header">Permissions</h5>
+                    <hr class="my-0" />
+                    <div class="card-body">
+                        {{-- <form id="formAccountSettings" method="POST" onsubmit="return false"> --}}
+                        <div class="row">
+                            <!-- List group Flush (Without main border) -->
+                            <div class="col-lg-12 mb-4 mb-xl-0">
+                                <div class="demo-inline-spacing mt-3">
+                                    <div class="list-group list-group-flush">
+                                        @foreach ($role->permissions as $permission)
+                                            <span class="list-group-item list-group-item-action">
+                                                {{ $loop->iteration }} {{ $permission->name }}
+                                            </span>
+                                        @endforeach
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/ List group Flush (Without main border) -->
+                        </div>
+                        {{-- </form> --}}
+                    </div>
+                    {{-- // role permissions // --}}
+                @endif
+
+                @if (checkIfRoleUsed($role->name, $role->guard_name))
+                    {{-- users who use the role --}}
+                    <h5 class="card-header">Who Use This Role?</h5>
+                    <hr class="my-0" />
+                    <div class="card-body">
+                        {{-- <form id="formAccountSettings" method="POST" onsubmit="return false"> --}}
+                        <div class="row">
+                            <!-- List group Flush (Without main border) -->
+                            <div class="col-lg-12 mb-4 mb-xl-0">
+                                <div class="demo-inline-spacing mt-3">
+                                    <div class="list-group list-group-flush">
+                                        @foreach (getUsersByRole($role->name, $role->guard_name) as $admin)
+                                            <span class="list-group-item list-group-item-action">
+                                                <i class='bx bx-user mx-2'></i>{{ $admin->name }}</span>
+                                        @endforeach
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!--/ List group Flush (Without main border) -->
+                        </div>
+                        {{-- </form> --}}
+                    </div>
+                    {{-- // users who use the role// --}}
+                @endif
             </div>
         </div>
     </div>

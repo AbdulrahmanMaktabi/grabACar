@@ -67,7 +67,7 @@
          <x-sidebar-btn--toggle title="Users" :indexRoute="route('back.user.index')" :createRoute="route('back.user.create')" icon="bx-user">
          </x-sidebar-btn--toggle>
          <!-- Roles -->
-         <x-sidebar-btn--toggle title="Roles" :indexRoute="route('back.role.index')" createRoute="#" icon="bx-lock">
+         <x-sidebar-btn--toggle title="Roles" :indexRoute="route('back.role.index')" :createRoute="route('back.role.create')" icon="bx-lock">
          </x-sidebar-btn--toggle>
          <!-- Cars -->
          <x-sidebar-btn--toggle title="Cars" indexRoute="#" createRoute="#" icon="bx-car">

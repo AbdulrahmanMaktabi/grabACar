@@ -35,12 +35,14 @@
                                             Show
                                         </a>
                                         <!-- Edit Button -->
-                                        <a href="#" class="btn btn-sm btn-warning me-2">
+                                        <a href="{{ route('back.role.edit', ['role' => $role]) }}"
+                                            class="btn btn-sm btn-warning me-2">
                                             Edit
                                         </a>
                                         <!-- Delete Button -->
-                                        <form action="#" method="post">
+                                        <form action="{{ route('back.role.destroy', ['role' => $role]) }}" method="post">
                                             @csrf
+                                            @method('delete')
                                             <input type="hidden" name="_method" value="DELETE">
                                             <input class="btn btn-sm btn-danger me-2" type="submit" value="Delete">
                                         </form>

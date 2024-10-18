@@ -31,7 +31,8 @@
         },
         "files": [
             "app/Helpers/checkIfSuperAdmin.php" , 
-            "app/Helpers/checkifAuthSameUser.php"
+            "app/Helpers/checkifAuthSameUser.php",
+            "app/Helpers/checkWichModel.php"
         ]
     },
     "autoload-dev": {
