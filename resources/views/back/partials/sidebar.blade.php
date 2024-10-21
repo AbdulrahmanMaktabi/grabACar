@@ -47,7 +47,7 @@
                      </g>
                  </svg>
              </span>
-             <span class="app-brand-text demo menu-text fw-bolder ms-2">Sneat</span>
+             <span class="app-brand-text demo menu-text fw-bolder ms-2">Back</span>
          </a>
 
          <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -70,7 +70,7 @@
          <x-sidebar-btn--toggle title="Roles" :indexRoute="route('back.role.index')" :createRoute="route('back.role.create')" icon="bx-lock">
          </x-sidebar-btn--toggle>
          <!-- Cars -->
-         <x-sidebar-btn--toggle title="Cars" indexRoute="#" createRoute="#" icon="bx-car">
+         <x-sidebar-btn--toggle title="Cars" :indexRoute="route('back.car.index')" :createRoute="route('back.car.create')" icon="bx-car">
          </x-sidebar-btn--toggle>
          <!-- Accoutn -->
          <li class="menu-header small text-uppercase">

@@ -2,10 +2,12 @@
 
 use App\Http\Controllers\Back\AdminController;
 use App\Http\Controllers\Back\BackHomeController;
+use App\Http\Controllers\Back\CarController;
 use App\Http\Controllers\Back\RoleController;
 use App\Http\Controllers\Back\UserController;
 use App\Http\Controllers\Front\FrontHomeController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Models;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,5 +41,12 @@ Route::prefix('back')
         Route::resource('admin', AdminController::class)->middleware('admin');
         Route::resource('user', UserController::class)->middleware('admin');
         Route::resource('role', RoleController::class)->middleware('admin');
+        Route::resource('car', CarController::class)->middleware('admin');
         require __DIR__ . '/adminAuth.php';
     });
+
+// api
+Route::get('/get-models/{marker_id}', function ($marker_id) {
+    $models = Models::where('marker_id', $marker_id)->get();
+    return response()->json($models);
+});
