@@ -5,7 +5,9 @@ use App\Http\Controllers\Back\BackHomeController;
 use App\Http\Controllers\Back\CarController;
 use App\Http\Controllers\Back\RoleController;
 use App\Http\Controllers\Back\UserController;
+use App\Http\Controllers\Front\CarController as FrontCarController;
 use App\Http\Controllers\Front\FrontHomeController;
+use App\Http\Controllers\Front\UserController as FrontUserController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Models;
 use Illuminate\Support\Facades\Route;
@@ -29,8 +31,10 @@ use Illuminate\Support\Facades\Route;
 Route::prefix('dashboard')
     ->name('front.')
     ->group(function () {
-        Route::get('/', FrontHomeController::class)->name('index')->middleware(['auth', 'verified']);
-    });
+        Route::get('/', FrontHomeController::class)->name('index');
+        Route::resource('car', FrontCarController::class);
+        Route::resource('user', FrontUserController::class)->only(['show', 'edit', 'update', 'destroy']);
+    })->middleware(['auth', 'verified']);
 require __DIR__ . '/auth.php';
 
 // Back Dashboard

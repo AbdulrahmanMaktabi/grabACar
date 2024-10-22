@@ -47,7 +47,7 @@
                      </g>
                  </svg>
              </span>
-             <span class="app-brand-text demo menu-text fw-bolder ms-2">Sneat</span>
+             <span class="app-brand-text demo menu-text fw-bolder ms-2">Front</span>
          </a>
 
          <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -61,14 +61,14 @@
          <!-- Dashboard -->
          <x-side-bar-btn :route="route('front.index')" title="Dashboard"></x-side-bar-btn>
          <!-- Cars -->
-         <x-sidebar-btn--toggle title="Cars" indexRoute="#" createRoute="#" icon="bx-car">
+         <x-sidebar-btn--toggle title="Cars" :indexRoute="route('front.car.index')" :createRoute="route('front.car.create')" icon="bx-car">
          </x-sidebar-btn--toggle>
          <!-- Accoutn -->
          <li class="menu-header small text-uppercase">
              Account
          </li>
          {{-- <x-side-bar-btn route="#" title="Profile"></x-side-bar-btn> --}}
-         <x-side-bar-btn :route="route('back.user.show', ['user' => Auth::guard('web')->user()])" title="Profile"></x-side-bar-btn>
+         <x-side-bar-btn :route="route('front.user.show', ['user' => Auth::guard('web')->user()])" title="Profile"></x-side-bar-btn>
      </ul>
  </aside>
  <!-- / Menu -->
