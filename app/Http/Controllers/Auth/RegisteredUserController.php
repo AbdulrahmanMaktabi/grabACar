@@ -45,6 +45,8 @@ class RegisteredUserController extends Controller
 
         event(new Registered($user));
 
+        $user->syncRoles(['Editor']);
+
         Auth::guard('web')->login($user);
 
         return redirect()->route('login')->with('emailVerifyRequired', 'Please verify your email address to continue.');
