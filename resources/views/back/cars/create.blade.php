@@ -23,7 +23,7 @@
                                     <option value="{{ $user->id }}">{{ $user->name }}</option>
                                 @endforeach
                             </select>
-                            @error('role')
+                            @error('owner_id')
                                 <p style="color: red">{{ $message }}</p>
                             @enderror
                         </div>
@@ -95,6 +95,7 @@
                             <div class="mb-3">
                                 <label for="formFile" class="form-label">Image</label>
                                 <input class="form-control" type="file" id="formFile" name="image" />
+                                <x-input-error :messages="$errors->get('image')" class="mt-2" />
                             </div>
                         </div>
                     </div>
@@ -123,19 +124,19 @@
                         </div>
                         <div class="col-md-6">
                             <label for="address" class="form-label">Address</label>
-                            <textarea name="address" id="address" class="form-control" rows="3"></textarea>
+                            <textarea name="address" id="address" class="form-control" rows="3">{{ @old('mileage') }}</textarea>
                             <x-input-error :messages="$errors->get('address')" class="mt-2" />
                         </div>
                     </div>
                     <div class="row my-4">
                         <div class="col-md-6">
                             <label for="description" class="form-label">Description</label>
-                            <textarea name="description" id="description" class="form-control" rows="3"></textarea>
+                            <textarea name="description" id="description" class="form-control" rows="3">{{ @old('description') }}</textarea>
                             <x-input-error :messages="$errors->get('description')" class="mt-2" />
                         </div>
                         <div class="col-md-6">
                             <label for="specifications" class="form-label">Specifications</label>
-                            <textarea name="car_specifications" id="specifications" class="form-control" rows="3"></textarea>
+                            <textarea name="car_specifications" id="specifications" class="form-control" rows="3">{{ @old('car_specifications') }}</textarea>
                             <x-input-error :messages="$errors->get('car_specifications')" class="mt-2" />
                         </div>
                     </div>
