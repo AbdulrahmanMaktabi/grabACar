@@ -59,13 +59,20 @@
                                             <a class="dropdown-item" href="{{ route('back.car.show', ['car' => $car]) }}"><i
                                                     class="bx bx-show-alt me-1"></i>
                                                 Show</a>
-                                            <a class="dropdown-item"
-                                                href="{{ route('back.car.edit', ['car' => $car]) }}"><i
+                                            <a class="dropdown-item" href="{{ route('back.car.edit', ['car' => $car]) }}"><i
                                                     class="bx bx-edit-alt me-1"></i>
                                                 Edit</a>
-                                            <a class="dropdown-item" href="javascript:void(0);"><i
-                                                    class="bx bx-trash me-1"></i>
-                                                Delete</a>
+                                            <form action="{{ route('back.car.destroy', ['car' => $car]) }}" method="post"
+                                                id="deleteForm">
+                                                @csrf
+                                                @method('delete')
+                                                <a class="dropdown-item" href="javascript:void(0);"
+                                                    onclick="document.getElementById('deleteForm').submit();">
+                                                    <i class="bx bx-trash me-1"></i>
+                                                    Delete
+                                                </a>
+                                            </form>
+
                                         </div>
                                     </div>
                                 </td>
