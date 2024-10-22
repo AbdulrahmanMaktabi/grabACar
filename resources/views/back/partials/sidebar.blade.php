@@ -60,18 +60,27 @@
      <ul class="menu-inner py-1">
          <!-- Dashboard -->
          <x-side-bar-btn :route="route('back.index')" title="Dashboard"></x-side-bar-btn>
-         <!-- Admins -->
-         <x-sidebar-btn--toggle title="Admins" :indexRoute="route('back.admin.index')" :createRoute="route('back.admin.create')" icon="bxl-php">
-         </x-sidebar-btn--toggle>
-         <!-- Users -->
-         <x-sidebar-btn--toggle title="Users" :indexRoute="route('back.user.index')" :createRoute="route('back.user.create')" icon="bx-user">
-         </x-sidebar-btn--toggle>
-         <!-- Roles -->
-         <x-sidebar-btn--toggle title="Roles" :indexRoute="route('back.role.index')" :createRoute="route('back.role.create')" icon="bx-lock">
-         </x-sidebar-btn--toggle>
-         <!-- Cars -->
-         <x-sidebar-btn--toggle title="Cars" :indexRoute="route('back.car.index')" :createRoute="route('back.car.create')" icon="bx-car">
-         </x-sidebar-btn--toggle>
+         @if (isSuperAdmin())
+             <!-- Admins -->
+             <x-sidebar-btn--toggle title="Admins" :indexRoute="route('back.admin.index')" :createRoute="route('back.admin.create')" icon="bxl-php">
+             </x-sidebar-btn--toggle>
+         @endif
+
+         @if (checkThePermission('admin', 'view_user'))
+             <!-- Users -->
+             <x-sidebar-btn--toggle title="Users" :indexRoute="route('back.user.index')" :createRoute="route('back.user.create')" icon="bx-user">
+             </x-sidebar-btn--toggle>
+         @endif
+         @if (isSuperAdmin())
+             <!-- Roles -->
+             <x-sidebar-btn--toggle title="Roles" :indexRoute="route('back.role.index')" :createRoute="route('back.role.create')" icon="bx-lock">
+             </x-sidebar-btn--toggle>
+         @endif
+         @if (checkThePermission('admin', 'cars_dashboard'))
+             <!-- Cars -->
+             <x-sidebar-btn--toggle title="Cars" :indexRoute="route('back.car.index')" :createRoute="route('back.car.create')" icon="bx-car">
+             </x-sidebar-btn--toggle>
+         @endif
          <!-- Accoutn -->
          <li class="menu-header small text-uppercase">
              Account

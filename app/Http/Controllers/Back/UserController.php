@@ -14,14 +14,13 @@ class UserController extends Controller
 {
     public function __construct()
     {
-        // $this->middleware(function ($request, $next) {
-        //     $auth = Auth::guard('admin')->user();
-        //     if (!$auth->hasRole('Super Admin')) {
-        //         return $next($request);
-        //     } else {
-        //         return redirect()->route('back.admin.index');
-        //     }
-        // })->only('destroy');
+        $this->middleware(function ($request, $next) {
+
+            if (isSuperAdmin())
+                return $next($request);
+
+            return abort(403);
+        });
     }
     /**
      * Display a listing of the resource.

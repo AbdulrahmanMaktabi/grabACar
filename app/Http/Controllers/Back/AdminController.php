@@ -15,13 +15,11 @@ class AdminController extends Controller
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
-            $auth = Auth::guard('admin')->user();
-            if (!$auth->hasRole('Super Admin')) {
+            if (isSuperAdmin())
                 return $next($request);
-            } else {
-                return redirect()->route('back.admin.index');
-            }
-        })->only('destroy');
+
+            return abort(403);
+        });
     }
     /**
      * Display a listing of the resource.
