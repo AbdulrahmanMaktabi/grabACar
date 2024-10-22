@@ -30,11 +30,12 @@ use Illuminate\Support\Facades\Route;
 // Front Dashboard
 Route::prefix('dashboard')
     ->name('front.')
+    ->middleware(['auth', 'verified'])
     ->group(function () {
         Route::get('/', FrontHomeController::class)->name('index');
         Route::resource('car', FrontCarController::class);
         Route::resource('user', FrontUserController::class)->only(['show', 'edit', 'update', 'destroy']);
-    })->middleware(['auth', 'verified']);
+    });
 require __DIR__ . '/auth.php';
 
 // Back Dashboard
