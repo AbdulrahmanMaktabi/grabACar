@@ -20,60 +20,6 @@
                 </thead>
                 <tbody class="table-border-bottom-0">
                     @if (isset($cars))
-                        {{-- @foreach ($cars as $car)
-                            @php
-                                use App\Models\fuel;
-                                use App\Models\Marker;
-                                use App\Models\User;
-
-                                $user = User::where('id', $car->owner_id)->get();
-                                $marker = Marker::where('id', $car->marker_id)->get();
-                                $fuel = Fuel::where('id', $car->fuel_id)->get();
-                            @endphp
-                            <tr>
-                                <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
-                                    <strong>{{ $car->name }}</strong>
-                                </td>
-                                <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
-                                    <img src="{{ $car->getFirstMediaUrl('images') }}" alt="{{ $car->name }}"
-                                        style="max-width: 180px">
-                                </td>
-                                <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
-                                    <strong>{{ $user->name }}</strong>
-                                </td>
-                                <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
-                                    <strong>{{ $marker->name }}</strong>
-                                </td>
-                                <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
-                                    <strong>{{ $car->year }}</strong>
-                                </td>
-                                <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
-                                    <strong>{{ $fuel->name }}</strong>
-                                </td>
-                                <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
-                                    <strong>{{ $car->price }}</strong>
-                                </td>
-                                <td>
-                                    <div class="dropdown">
-                                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow"
-                                            data-bs-toggle="dropdown">
-                                            <i class="bx bx-dots-vertical-rounded"></i>
-                                        </button>
-                                        <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="javascript:void(0);"><i
-                                                    class="bx bx-show-alt me-1"></i>
-                                                Show</a>
-                                            <a class="dropdown-item" href="javascript:void(0);"><i
-                                                    class="bx bx-edit-alt me-1"></i>
-                                                Edit</a>
-                                            <a class="dropdown-item" href="javascript:void(0);"><i
-                                                    class="bx bx-trash me-1"></i>
-                                                Delete</a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                        @endforeach --}}
                         @foreach ($cars as $car)
                             @php
                                 $user = $car->user; // Assuming you have a relationship set up
@@ -110,7 +56,8 @@
                                             <i class="bx bx-dots-vertical-rounded"></i>
                                         </button>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item" href="javascript:void(0);"><i
+                                            <a class="dropdown-item"
+                                                href="{{ route('back.car.show', ['car' => $car]) }}"><i
                                                     class="bx bx-show-alt me-1"></i>
                                                 Show</a>
                                             <a class="dropdown-item" href="javascript:void(0);"><i
@@ -134,6 +81,9 @@
 
                 </tbody>
             </table>
+            <div class="container mt-4">
+                {{ $cars->links('pagination::bootstrap-5') }}
+            </div>
         </div>
     </div>
     <!--/  Table  -->

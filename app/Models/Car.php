@@ -39,6 +39,16 @@ class Car extends Model implements HasMedia
         return $this->belongsTo(Marker::class, 'marker_id');
     }
 
+    public function model()
+    {
+        return $this->belongsTo(Models::class, 'model_id');
+    }
+
+    public function carType()
+    {
+        return $this->belongsTo(car_type::class, 'carType_id');
+    }
+
     public function fuel()
     {
         return $this->belongsTo(fuel::class, 'fuel_id');

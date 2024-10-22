@@ -83,7 +83,7 @@ class CarController extends Controller
      */
     public function show(Car $car)
     {
-        //
+        return view('back.cars.show', get_defined_vars());
     }
 
     /**
