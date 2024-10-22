@@ -56,11 +56,11 @@
                                             <i class="bx bx-dots-vertical-rounded"></i>
                                         </button>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item"
-                                                href="{{ route('back.car.show', ['car' => $car]) }}"><i
+                                            <a class="dropdown-item" href="{{ route('back.car.show', ['car' => $car]) }}"><i
                                                     class="bx bx-show-alt me-1"></i>
                                                 Show</a>
-                                            <a class="dropdown-item" href="javascript:void(0);"><i
+                                            <a class="dropdown-item"
+                                                href="{{ route('back.car.edit', ['car' => $car]) }}"><i
                                                     class="bx bx-edit-alt me-1"></i>
                                                 Edit</a>
                                             <a class="dropdown-item" href="javascript:void(0);"><i

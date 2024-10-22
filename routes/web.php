@@ -46,7 +46,7 @@ Route::prefix('back')
     });
 
 // api
-Route::get('/get-models/{marker_id}', function ($marker_id) {
+Route::get('/get-models/{marker_id}/{model_id?}', function ($marker_id) {
     $models = Models::where('marker_id', $marker_id)->get();
     return response()->json($models);
 });

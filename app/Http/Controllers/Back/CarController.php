@@ -91,7 +91,12 @@ class CarController extends Controller
      */
     public function edit(Car $car)
     {
-        //
+        $models = Models::all();
+        $markers = Marker::all();
+        $carTypes = car_type::all();
+        $fuels = fuel::all();
+        $users = User::all();
+        return view('back.cars.edit', get_defined_vars());
     }
 
     /**
@@ -99,7 +104,30 @@ class CarController extends Controller
      */
     public function update(UpdateCarRequest $request, Car $car)
     {
-        //
+        $data = $request->validated();
+
+        $car->update([
+            "name" => $data['name'],
+            "owner_id" => $data['owner_id'],
+            "marker_id" => $data['marker_id'],
+            "model_id" => $data['model_id'],
+            "carType_id" => $data['carType_id'],
+            "fuel_id" => $data['fuel_id'],
+            "year" => $data['year'],
+            'price' => $data['price'],
+            'vin' => $data['vin'],
+            'mileage' => $data['mileage'],
+            'address' => $data['address'],
+            'description' => $data['description'],
+            'car_specifications' => $data['car_specifications'],
+        ]);
+
+        if ($request->hasFile('image')) {
+            $car->clearMediaCollection('images');
+            $car->addMediaFromRequest('image')->toMediaCollection('images');
+        }
+
+        return redirect()->route('back.car.index');
     }
 
     /**

@@ -2,6 +2,9 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Support\Facades\Auth;
+
+
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateCarRequest extends FormRequest
@@ -11,6 +14,8 @@ class UpdateCarRequest extends FormRequest
      */
     public function authorize(): bool
     {
+        if (isSuperAdmin() || Auth::guard('admin')->user()->hasAnyRole('Admin'))
+            return true;
         return false;
     }
 
@@ -22,7 +27,21 @@ class UpdateCarRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "name" => ["nullable", "string"],
+            "owner_id" => ["nullable", "exists:users,id"],
+            "marker_id" => ["nullable", "exists:markers,id"],
+            "model_id" => ["nullable", "exists:models,id"],
+            "carType_id" => ["nullable", "exists:car_types,id"],
+            "fuel_id" => ["nullable", "exists:fuels,id"],
+            "year" => ["nullable"],
+            // 'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'image' => ['nullable'],
+            'price' => ['nullable'],
+            'vin' => ['nullable'],
+            'mileage' => ['nullable'],
+            'address' => ['nullable', 'string'],
+            'description' => ['nullable', 'string'],
+            'car_specifications' => ['nullable', 'string'],
         ];
     }
 }
