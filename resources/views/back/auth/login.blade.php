@@ -111,6 +111,12 @@
                         <!-- /Logo -->
                         <h4 class="mb-2">Welcome to GrabAcar Dashboard! 👋</h4>
                         <p class="mb-4">Please sign-in to your account and start the adventure</p>
+                        <p class="">Email: super@admin.com</p>
+                        <p class="">Password: secret</p>
+                        <hr>
+                        <p class="">Email: admin@site.com</p>
+                        <p class="">Password: password1.</p>
+                        <hr>
 
                         <form id="formAuthentication" class="mb-3" action="{{ route('back.login') }}" method="POST">
                             @csrf
@@ -121,12 +127,6 @@
                                 <x-input-error :messages="$errors->get('email')" class="mt-2" />
                             </div>
                             <div class="mb-3 form-password-toggle">
-                                <div class="d-flex justify-content-between">
-                                    <label class="form-label" for="password">Password</label>
-                                    <a href="auth-forgot-password-basic.html">
-                                        <small>Forgot Password?</small>
-                                    </a>
-                                </div>
                                 <div class="input-group input-group-merge">
                                     <input type="password" id="password" class="form-control" name="password"
                                         placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
