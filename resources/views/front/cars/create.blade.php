@@ -51,8 +51,8 @@
 
                     <div class="row my-4">
                         <div class="col-md-6">
-                            <label for="exampleFormControlSelect1" class="form-label">Type</label>
-                            <select class="form-select" id="exampleFormControlSelect1" aria-label="Default select example"
+                            <label for="carType" class="form-label">Type</label>
+                            <select class="form-select" id="carType" aria-label="Default select example"
                                 name="carType_id">
                                 <option></option>
                                 @foreach ($carTypes as $type)
@@ -72,9 +72,8 @@
                     </div>
                     <div class="row my-4">
                         <div class="col-md-6">
-                            <label for="exampleFormControlSelect1" class="form-label">Fuel</label>
-                            <select class="form-select" id="exampleFormControlSelect1" aria-label="Default select example"
-                                name="fuel_id">
+                            <label for="fuel" class="form-label">Fuel</label>
+                            <select class="form-select" id="fuel" aria-label="Default select example" name="fuel_id">
                                 <option></option>
                                 @foreach ($fuels as $fuel)
                                     <option value="{{ $fuel->id }}">{{ $fuel->name }}</option>

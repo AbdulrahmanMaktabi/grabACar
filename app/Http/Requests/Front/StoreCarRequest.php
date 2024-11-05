@@ -12,9 +12,7 @@ class StoreCarRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        if (isSuperAdmin() || Auth::guard('admin')->user()->hasAnyRole('Admin'))
-            return true;
-        return false;
+        return Auth::guard('web')->user()->hasVerifiedEmail();
     }
 
     /**

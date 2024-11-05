@@ -23,10 +23,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('front.index');
-// })->name('home')->middleware('auth');
-
+Route::redirect('/', '/login');
 // Front Dashboard
 Route::prefix('dashboard')
     ->name('front.')
