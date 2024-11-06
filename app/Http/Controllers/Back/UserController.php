@@ -25,9 +25,16 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::verified()->paginate(5);
+        $filter = $request->query('filter', 'all'); // Default to 'all' if no filter is provided
+
+        if ($filter === 'verified') {
+            $users = User::verified()->paginate(5);
+            return view('back.users.index', get_defined_vars());
+        }
+
+        $users = User::paginate(5);
         return view('back.users.index', get_defined_vars());
     }
     /**

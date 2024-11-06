@@ -4,6 +4,22 @@
     <!-- Basic Bootstrap Table -->
     <div class="card">
         <h5 class="card-header">Users Table</h5>
+
+        <div class="container">
+            <div style="max-width: 200px;">
+                <!-- Filter Form -->
+                <form action="{{ route('back.user.index') }}" method="GET" class="mb-3">
+                    <label for="filter" class="form-label">Filter:</label>
+                    <select name="filter" id="filter" class="form-select" onchange="this.form.submit()">
+                        <option value="all" {{ request('filter') == 'all' ? 'selected' : '' }}>All Users</option>
+                        <option value="verified" {{ request('filter') == 'verified' ? 'selected' : '' }}>Verified Users
+                        </option>
+                    </select>
+                </form>
+            </div>
+        </div>
+
+
         <div class="table-responsive text-nowrap">
             <table class="table">
                 <thead>
