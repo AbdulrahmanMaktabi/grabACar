@@ -33,7 +33,8 @@
         "files": [
             "app/Helpers/checkIfSuperAdmin.php" , 
             "app/Helpers/checkifAuthSameUser.php",
-            "app/Helpers/checkWichModel.php"
+            "app/Helpers/checkWichModel.php",
+            "app/Helpers/checkThePermission.php"
         ]
     },
     "autoload-dev": {

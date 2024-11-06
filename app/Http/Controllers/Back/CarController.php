@@ -12,6 +12,7 @@ use App\Models\Marker;
 use App\Models\Models;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class CarController extends Controller
 {
@@ -20,7 +21,7 @@ class CarController extends Controller
         $this->middleware(function ($request, $next) {
             $user = Auth::guard('admin')->user();
 
-            if (isSuperAdmin() || ($user && $user->hasAnyRole(['Admin']))) {
+            if (Gate::allows('access-admin-car-area')) {
                 return $next($request);
             }
 
