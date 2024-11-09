@@ -28,7 +28,7 @@
                             <div class="mb-3 col-md-6">
                                 <label for="text" class="form-label">Role</label>
                                 <input disabled class="form-control" type="text" id="role" name="role"
-                                    value="{{ $user->getRoleNames('web')[0] }}" placeholder="Role" />
+                                    value="{{ $user->getRoleNames('web')->first() }}" placeholder="Role" />
                             </div>
                         @endif
 

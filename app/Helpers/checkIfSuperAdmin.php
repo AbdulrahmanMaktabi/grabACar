@@ -2,8 +2,14 @@
 
 use Illuminate\Support\Facades\Auth;
 
-function isSuperAdmin()
+function isSuperAdmin($authAdmin = null)
 {
-    if (Auth::guard('admin')->user())
-        return Auth::guard('admin')->user()->getRoleNames()[0] == 'Super Admin';
+    $user = $authAdmin ?? Auth::guard('admin')->user();
+
+    if (!$user) {
+        return false;
+    }
+
+    $roles = $user->getRoleNames();
+    return $roles->contains('Super Admin');
 }

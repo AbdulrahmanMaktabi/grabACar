@@ -46,7 +46,7 @@
                                 <td>
                                     @if (count($user->getRoleNames('web')) > 0)
                                         <span class="badge bg-label-primary me-1">
-                                            {{ $user->getRoleNames('web')[0] }}
+                                            {{ $user->getRoleNames('web')->first() }}
                                         </span>
                                     @else
                                         <span class="badge bg-label-warning me-1">

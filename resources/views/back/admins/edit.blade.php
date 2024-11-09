@@ -45,7 +45,7 @@
                                 <option>Role</option>
                                 @foreach ($admin_roles as $role)
                                     @if ($role->name != 'Super Admin')
-                                        <option {{ $admin->getRoleNames()[0] == $role->name ? 'selected' : '' }}
+                                        <option {{ $admin->getRoleNames()->first() == $role->name ? 'selected' : '' }}
                                             value="{{ $role->name }}">{{ $role->name }}</option>
                                     @endif
                                 @endforeach

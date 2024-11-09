@@ -30,7 +30,11 @@
                                     <td>
                                         {{ $admin->email }}
                                     </td>
-                                    <td><span class="badge bg-label-primary me-1">{{ $admin->getRoleNames()[0] }}</span></td>
+                                    <td>
+                                        <span class="badge bg-label-primary me-1">
+                                            {{ $admin->getRoleNames()->first() }}
+                                        </span>
+                                    </td>
                                     <td>
                                         @if (!$admin->hasRole('Super Admin'))
                                             <!-- Button group for Edit and Deactivate -->

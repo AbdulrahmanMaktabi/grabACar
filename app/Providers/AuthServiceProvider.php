@@ -22,9 +22,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-
-        Gate::define('access-admin-car-area', function ($user) {
-            return isSuperAdmin() || $user->hasAnyRole(['Admin']);
+        Gate::define('access-admin-car-area', function () {
+            return true;
         });
     }
 }

@@ -542,7 +542,7 @@
 
                 <div class="ml-4 text-lg text-gray-500 uppercase tracking-wider">
                     <a href="{{ route('back.login') }}" class="text-lg text-gray-500 border-gray-400 tracking-wider">
-                        Try To Login
+                        {{ $message ?? 'Try To Login' }}
                     </a>
                 </div>
             </div>

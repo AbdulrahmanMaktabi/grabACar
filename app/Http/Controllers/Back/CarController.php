@@ -19,15 +19,15 @@ class CarController extends Controller
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
-            $user = Auth::guard('admin')->user();
-
-            if (Gate::allows('access-admin-car-area')) {
+            if (Auth::guard('admin')->user()->can('cars_dashboard')) {
                 return $next($request);
+            } else {
+                abort(403);
             }
-
-            return abort(404); // Optionally return abort(403) for forbidden access
         });
     }
+
+
     /**
      * Display a listing of the resource.
      */
