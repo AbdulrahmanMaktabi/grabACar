@@ -11,12 +11,13 @@ class SideBarBtn extends Component
     /**
      * Create a new component instance.
      */
-    public $route, $title, $active;
-    public function __construct($route, $title, $active = '')
+    public $route, $title, $active, $icon;
+    public function __construct($route, $title, $active = '', $icon = null)
     {
         $this->title = $title;
         $this->route = $route;
         $this->active = $active;
+        $this->icon = $icon ?? '';
     }
 
     /**

@@ -59,7 +59,7 @@
 
      <ul class="menu-inner py-1">
          <!-- Dashboard -->
-         <x-side-bar-btn :route="route('front.index')" title="Dashboard"></x-side-bar-btn>
+         <x-side-bar-btn :route="route('front.index')" title="Dashboard" icon="bx-home-circle"></x-side-bar-btn>
          <!-- Cars -->
          <x-sidebar-btn--toggle title="Cars" :indexRoute="route('front.car.index')" :createRoute="route('front.car.create')" icon="bx-car">
          </x-sidebar-btn--toggle>
@@ -67,8 +67,11 @@
          <li class="menu-header small text-uppercase">
              Account
          </li>
-         {{-- <x-side-bar-btn route="#" title="Profile"></x-side-bar-btn> --}}
-         <x-side-bar-btn :route="route('front.user.show', ['user' => Auth::guard('web')->user()])" title="Profile"></x-side-bar-btn>
+         {{-- Profile --}}
+         <x-side-bar-btn :route="route('front.user.show', ['user' => Auth::guard('web')->user()])" title="Profile" icon="bx-user"></x-side-bar-btn>
+         {{-- All Cars --}}
+         <x-side-bar-btn route="#" title="All Cars" icon="bxs-car-garage" />
+
      </ul>
  </aside>
  <!-- / Menu -->
