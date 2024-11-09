@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AllCarController;
 use App\Http\Controllers\Back\AdminController;
 use App\Http\Controllers\Back\BackHomeController;
 use App\Http\Controllers\Back\CarController;
@@ -31,6 +32,7 @@ Route::prefix('dashboard')
     ->group(function () {
         Route::get('/', FrontHomeController::class)->name('index');
         Route::resource('car', FrontCarController::class);
+        Route::get('/cars', AllCarController::class)->name('allCar');
         Route::resource('user', FrontUserController::class)->only(['show', 'edit', 'update', 'destroy']);
     });
 require __DIR__ . '/auth.php';
