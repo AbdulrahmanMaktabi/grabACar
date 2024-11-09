@@ -70,7 +70,7 @@
          {{-- Profile --}}
          <x-side-bar-btn :route="route('front.user.show', ['user' => Auth::guard('web')->user()])" title="Profile" icon="bx-user"></x-side-bar-btn>
          {{-- All Cars --}}
-         <x-side-bar-btn route="#" title="All Cars" icon="bxs-car-garage" />
+         <x-side-bar-btn :route="route('front.allCar')" title="All Cars" icon="bxs-car-garage" />
 
      </ul>
  </aside>

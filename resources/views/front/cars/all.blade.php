@@ -56,22 +56,14 @@
                                             <i class="bx bx-dots-vertical-rounded"></i>
                                         </button>
                                         <div class="dropdown-menu">
-                                            <a class="dropdown-item"
-                                                href="{{ route('front.car.show', ['car' => $car]) }}"><i
-                                                    class="bx bx-show-alt me-1"></i>
-                                                Show</a>
-                                            <a class="dropdown-item"
-                                                href="{{ route('front.car.edit', ['car' => $car]) }}"><i
-                                                    class="bx bx-edit-alt me-1"></i>
-                                                Edit</a>
-                                            <form action="{{ route('front.car.destroy', ['car' => $car]) }}" method="post"
-                                                id="deleteForm">
+                                            <form action="{{ route('front.favoriteStore') }}" method="post">
                                                 @csrf
-                                                @method('delete')
-                                                <a class="dropdown-item" href="javascript:void(0);"
-                                                    onclick="document.getElementById('deleteForm').submit();">
-                                                    <i class="bx bx-trash me-1"></i>
-                                                    Delete
+                                                <input type="hidden" name="car_id" value="{{ $car->id }}">
+                                                <input type="hidden" name="user_id"
+                                                    value="{{ Auth::guard('web')->id() }}">
+                                                <a class="dropdown-item" href="javascript:void(0)"
+                                                    onclick="this.closest('form').submit()">
+                                                    <i class="bx bx-heart me-1"></i> Favorite
                                                 </a>
                                             </form>
 

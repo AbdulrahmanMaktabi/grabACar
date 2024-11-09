@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\AllCarController;
 use App\Http\Controllers\Back\AdminController;
 use App\Http\Controllers\Back\BackHomeController;
 use App\Http\Controllers\Back\CarController;
@@ -9,6 +8,8 @@ use App\Http\Controllers\Back\UserController;
 use App\Http\Controllers\Front\CarController as FrontCarController;
 use App\Http\Controllers\Front\FrontHomeController;
 use App\Http\Controllers\Front\UserController as FrontUserController;
+use App\Http\Controllers\Front\AllCarController;
+use App\Http\Controllers\Front\FavoriteCarsController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Models;
 use Illuminate\Support\Facades\Route;
@@ -33,6 +34,7 @@ Route::prefix('dashboard')
         Route::get('/', FrontHomeController::class)->name('index');
         Route::resource('car', FrontCarController::class);
         Route::get('/cars', AllCarController::class)->name('allCar');
+        Route::post('/cars/favorite', [FavoriteCarsController::class, 'store'])->name('favoriteStore');
         Route::resource('user', FrontUserController::class)->only(['show', 'edit', 'update', 'destroy']);
     });
 require __DIR__ . '/auth.php';
