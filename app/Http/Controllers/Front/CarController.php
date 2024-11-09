@@ -31,7 +31,13 @@ class CarController extends Controller
     public function index()
     {
         $authUser = Auth::guard('web')->user();
-        $cars = Car::where('owner_id', $authUser->id)->paginate(5);
+
+        if (!$authUser) {
+            return redirect()->route('login');
+        }
+
+        $cars = Car::with('model')->where('owner_id', $authUser->id)->paginate(5);
+
         return view('front.cars.index', get_defined_vars());
     }
 
