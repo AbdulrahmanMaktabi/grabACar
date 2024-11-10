@@ -55,19 +55,37 @@
                                             data-bs-toggle="dropdown">
                                             <i class="bx bx-dots-vertical-rounded"></i>
                                         </button>
-                                        <div class="dropdown-menu">
-                                            <form action="{{ route('front.favoriteStore') }}" method="post">
-                                                @csrf
-                                                <input type="hidden" name="car_id" value="{{ $car->id }}">
-                                                <input type="hidden" name="user_id"
-                                                    value="{{ Auth::guard('web')->id() }}">
-                                                <a class="dropdown-item" href="javascript:void(0)"
-                                                    onclick="this.closest('form').submit()">
-                                                    <i class="bx bx-heart me-1"></i> Favorite
-                                                </a>
-                                            </form>
+                                        @if (isAddedToFavorite(Auth::guard('web')->user(), $car))
+                                            <div class="dropdown-menu">
+                                                <form action="{{ route('front.favoriteDelete') }}" method="post">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <input type="hidden" name="car_id" value="{{ $car->id }}">
+                                                    <input type="hidden" name="user_id"
+                                                        value="{{ Auth::guard('web')->id() }}">
+                                                    <a class="dropdown-item" href="javascript:void(0)"
+                                                        onclick="this.closest('form').submit()">
+                                                        <i class="bx bx-x me-1"></i> Unfavorite
+                                                    </a>
+                                                </form>
 
-                                        </div>
+                                            </div>
+                                        @else
+                                            <div class="dropdown-menu">
+                                                <form action="{{ route('front.favoriteStore') }}" method="post">
+                                                    @csrf
+                                                    <input type="hidden" name="car_id" value="{{ $car->id }}">
+                                                    <input type="hidden" name="user_id"
+                                                        value="{{ Auth::guard('web')->id() }}">
+                                                    <a class="dropdown-item" href="javascript:void(0)"
+                                                        onclick="this.closest('form').submit()">
+                                                        <i class="bx bx-heart me-1"></i> Favorite
+                                                    </a>
+                                                </form>
+
+                                            </div>
+                                        @endif
+
                                     </div>
                                 </td>
                             </tr>

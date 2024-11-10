@@ -35,7 +35,8 @@
             "app/Helpers/checkIfSuperAdmin.php" , 
             "app/Helpers/checkifAuthSameUser.php",
             "app/Helpers/checkWichModel.php",
-            "app/Helpers/checkThePermission.php"
+            "app/Helpers/checkThePermission.php",
+            "app/Helpers/checkIfUserAddedCarToFavorite.php"
         ]
     },
     "autoload-dev": {
