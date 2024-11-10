@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Front;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Car;
+use App\Models\Favorite;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
@@ -37,6 +39,17 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
+        $favorites = Favorite::where('user_id', $user->id)->get();
+
+        if ($favorites->isNotEmpty()) {
+            // Get favorite car IDs from the Favorite model
+            $favoriteCarsID = $favorites->pluck('car_id')->toArray();
+
+            // Get the cars associated with the favorite car IDs from the Car model
+            $cars = Car::whereIn('id', $favoriteCarsID)->get();
+            return view('front.users.profile', get_defined_vars());
+        }
+
         return view('front.users.profile', get_defined_vars());
     }
     /**
