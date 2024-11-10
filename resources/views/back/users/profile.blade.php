@@ -36,6 +36,77 @@
                     {{-- </form> --}}
                 </div>
                 <!-- /Account -->
+                {{-- Cars --}}
+                @if (isset($cars))
+                    <div class="card mb-4">
+                        <h5 class="card-header">Faveroite Cars</h5>
+                        <!-- Cars -->
+                        <hr class="my-0" />
+                        <div class="table-responsive text-nowrap">
+                            <table class="table table-hover">
+                                <thead>
+                                    <tr>
+                                        <th style="font-size: 16px">Name</th>
+                                        <th style="font-size: 16px">Image</th>
+                                        <th style="font-size: 16px">Owner</th>
+                                        <th style="font-size: 16px">Marker</th>
+                                        <th style="font-size: 16px">Year</th>
+                                        <th style="font-size: 16px">Fuel</th>
+                                        <th style="font-size: 16px">Price</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table-border-bottom-0">
+                                    @if (isset($cars))
+                                        @foreach ($cars as $car)
+                                            @php
+                                                $user = $car->user; // Assuming you have a relationship set up
+                                                $marker = $car->marker; // Assuming you have a relationship set up
+                                                $fuel = $car->fuel; // Assuming you have a relationship set up
+                                            @endphp
+                                            <tr>
+                                                <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
+                                                    <strong>{{ $car->name }}</strong>
+                                                </td>
+                                                <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
+                                                    <img src="{{ $car->getFirstMediaUrl('images') }}"
+                                                        alt="{{ $car->name }}" style="max-width: 180px">
+                                                </td>
+                                                <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
+                                                    <strong>{{ $user->name ?? 'N/A' }}</strong>
+                                                    <!-- Use null coalescing operator -->
+                                                </td>
+                                                <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
+                                                    <strong>{{ $marker->name ?? 'N/A' }}</strong>
+                                                </td>
+                                                <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
+                                                    <strong>{{ $car->year }}</strong>
+                                                </td>
+                                                <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
+                                                    <strong>{{ $fuel->name ?? 'N/A' }}</strong>
+                                                </td>
+                                                <td><i class="fab fa-angular fa-lg text-danger me-3"></i>
+                                                    <strong>{{ $car->price }}</strong>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <tr>
+                                            <td>
+                                                <h3 class="text-danger" style="padding-top: 10px">No Car Recordes!</h3>
+                                            </td>
+                                        </tr>
+                                    @endif
+
+                                </tbody>
+                            </table>
+                            <div class="container mt-4">
+                                {{ $cars->links('pagination::bootstrap-5') }}
+                            </div>
+                        </div>
+                        <!-- /Cars -->
+                    </div>
+                @endif
+                {{-- /Cars --}}
             </div>
         </div>
     </div>

@@ -59,7 +59,7 @@
 
          <ul class="menu-inner py-1">
              <!-- Dashboard -->
-             <x-side-bar-btn :route="route('back.index')" title="Dashboard"></x-side-bar-btn>
+             <x-side-bar-btn :route="route('back.index')" title="Dashboard" icon="bx-home"></x-side-bar-btn>
              @if (isSuperAdmin())
                  <!-- Admins -->
                  <x-sidebar-btn--toggle title="Admins" :indexRoute="route('back.admin.index')" :createRoute="route('back.admin.create')" icon="bxl-php">
@@ -85,7 +85,7 @@
              <li class="menu-header small text-uppercase">
                  Account
              </li>
-             <x-side-bar-btn :route="route('back.admin.show', ['admin' => Auth::guard('admin')->user()])" title="Profile"></x-side-bar-btn>
+             <x-side-bar-btn :route="route('back.admin.show', ['admin' => Auth::guard('admin')->user()])" title="Profile" icon="bx-user"></x-side-bar-btn>
          </ul>
      </aside>
      <!-- / Menu -->

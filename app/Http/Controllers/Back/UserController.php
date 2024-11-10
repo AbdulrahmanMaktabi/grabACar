@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Back\CreatingAdminRequest;
 use App\Models\Admin;
+use App\Models\Car;
+use App\Models\Favorite;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Spatie\Permission\Models\Role;
@@ -75,11 +77,17 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        // check if the user is seem to be logged in
-        if (Auth::guard('admin')->user()->hasAnyRole(['Super Admin', 'Admin'])) {
+        $favorites = Favorite::where('user_id', $user->id)->get();
+
+        if ($favorites->isNotEmpty()) {
+            // Get favorite car IDs from the Favorite model
+            $favoriteCarsID = $favorites->pluck('car_id')->toArray();
+
+            // Get the cars associated with the favorite car IDs from the Car model
+            $cars = Car::whereIn('id', $favoriteCarsID)->paginate(5);
             return view('back.users.profile', get_defined_vars());
         }
-        return redirect()->route('back.index');
+        return view('back.users.profile', get_defined_vars());
     }
     /**
      * Show the form for editing the specified resource.
