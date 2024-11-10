@@ -41,4 +41,13 @@ class FavoriteCarsController extends Controller
 
         return to_route('front.allCar')->with('favourit_message', 'Car successfully added to favorites');
     }
+
+    public function destroy(Request $request)
+    {
+        $request->validate(
+            [
+                'id' => '',
+            ]
+        );
+    }
 }
