@@ -87,5 +87,22 @@
             </div>
         </div>
     </div>
+    @if (session('favourit_message'))
+        <div class="alert alert-success alert-dismissible" role="alert"
+            style="position: fixed; top: 100px; right: 136px; width: fit-content;">
+            {{ session('favourit_message') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+    @if (session('favourit_existing'))
+        <div class="alert alert-primary alert-dismissible" role="alert"
+            style="position: fixed; top: 100px; right: 136px; width: fit-content;">
+            {{ session('favourit_existing') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+
+
     <!--/  Table  -->
 @endsection

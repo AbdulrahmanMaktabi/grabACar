@@ -24,6 +24,14 @@ class FavoriteCarsController extends Controller
             'user_id' => 'required|exists:users,id',
         ]);
 
+        $existingFavorite = Favorite::where('user_id', $request->user_id)
+            ->where('car_id', $request->car_id)
+            ->first();
+
+        if ($existingFavorite) {
+            return to_route('front.allCar')->with('favourit_existing', 'Car is already in your favorites');
+        }
+
         Favorite::updateOrCreate(
             [
                 'user_id' => $request->user_id,
@@ -31,6 +39,6 @@ class FavoriteCarsController extends Controller
             ]
         );
 
-        return redirect()->route('front.allCar');
+        return to_route('front.allCar')->with('favourit_message', 'Car successfully added to favorites');
     }
 }
