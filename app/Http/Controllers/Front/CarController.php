@@ -18,12 +18,19 @@ class CarController extends Controller
     public function __construct()
     {
         $this->middleware(function ($request, $next) {
-            if (checkThePermission('web', 'cars_dashboard')) {
+
+            $authUser = Auth::guard('web')->user();
+
+            if (!$authUser) {
+                return redirect()->route('login');
+            }
+
+            if (checkThePermission('web', 'cars_dashboard') && isSameUser('web', $request->route('car')->user->id)) {
                 return $next($request);
             }
 
-            return abort(404); // Optionally return abort(403) for forbidden access
-        });
+            return abort(403);
+        })->except(['index', 'show']);
     }
     /**
      * Display a listing of the resource.
@@ -88,10 +95,10 @@ class CarController extends Controller
      */
     public function show(Car $car)
     {
-        if (Auth::guard('web')->user()->id === $car->owner_id)
-            return view('front.cars.show', get_defined_vars());
+        // if (Auth::guard('web')->user()->id === $car->owner_id)
+        return view('front.cars.show', get_defined_vars());
 
-        return redirect()->route('front.car.index'); // Optionally return abort(403) for forbidden access
+        // return redirect()->route('front.car.index'); // Optionally return abort(403) for forbidden access
     }
 
     /**

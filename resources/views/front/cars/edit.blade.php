@@ -157,7 +157,7 @@
                     @endif
                     <div class="row my-5">
                         <div class="col-md-4">
-                            <input type="submit" value="Create" class="btn btn-primary">
+                            <input type="submit" value="Update" class="btn btn-primary">
                         </div>
                     </div>
                 </form>
