@@ -30,7 +30,7 @@ class CarController extends Controller
             }
 
             return abort(403);
-        })->only(['edit', 'update', 'destroy']);
+        })->only(['edit']);
     }
     /**
      * Display a listing of the resource.
