@@ -44,10 +44,20 @@ class FavoriteCarsController extends Controller
 
     public function destroy(Request $request)
     {
-        $request->validate(
-            [
-                'id' => '',
-            ]
-        );
+        $request->validate([
+            'car_id' => 'required|exists:cars,id',
+            'user_id' => 'required|exists:users,id',
+        ]);
+
+        $existingFavorite = Favorite::where('user_id', $request->user_id)
+            ->where('car_id', $request->car_id)
+            ->first();
+
+        if (!$existingFavorite) {
+            return to_route('front.allCar')->with('favourit_existing', 'Car is already not in your favorites');
+        }
+
+        Favorite::find($existingFavorite->id)->delete();
+        return to_route('front.user.show', ['user' => Auth::guard('web')->user()])->with('favourit_delete', 'Car successfully deleted from favorites');
     }
 }

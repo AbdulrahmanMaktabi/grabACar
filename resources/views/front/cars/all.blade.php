@@ -101,6 +101,13 @@
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     @endif
+    @if (session('favourit_delete'))
+        <div class="alert alert-danger alert-dismissible" role="alert"
+            style="position: fixed; top: 100px; right: 136px; width: fit-content;">
+            {{ session('favourit_delete') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
 
 
 

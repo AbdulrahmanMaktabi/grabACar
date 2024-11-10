@@ -99,15 +99,16 @@
                                                         <i class="bx bx-dots-vertical-rounded"></i>
                                                     </button>
                                                     <div class="dropdown-menu">
-                                                        <form action="{{ route('front.favoriteStore') }}" method="post">
+                                                        <form action="{{ route('front.favoriteDelete') }}" method="post">
                                                             @csrf
+                                                            @method('delete')
                                                             <input type="hidden" name="car_id"
                                                                 value="{{ $car->id }}">
                                                             <input type="hidden" name="user_id"
                                                                 value="{{ Auth::guard('web')->id() }}">
                                                             <a class="dropdown-item" href="javascript:void(0)"
                                                                 onclick="this.closest('form').submit()">
-                                                                <i class="bx bx-heart me-1"></i> Favorite
+                                                                <i class="bx bx-x me-1"></i> Unfavorite
                                                             </a>
                                                         </form>
 
@@ -136,4 +137,12 @@
 
         </div>
     </div>
+
+    @if (session('favourit_delete'))
+        <div class="alert alert-danger alert-dismissible" role="alert"
+            style="position: fixed; top: 100px; right: 136px; width: fit-content;">
+            {{ session('favourit_delete') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
 @endsection

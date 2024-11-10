@@ -35,6 +35,7 @@ Route::prefix('dashboard')
         Route::resource('car', FrontCarController::class);
         Route::get('/cars', AllCarController::class)->name('allCar');
         Route::post('/cars/favorite', [FavoriteCarsController::class, 'store'])->name('favoriteStore');
+        Route::delete('/cars/favorite/delete', [FavoriteCarsController::class, 'destroy'])->name('favoriteDelete');
         Route::resource('user', FrontUserController::class)->only(['show', 'edit', 'update', 'destroy']);
     });
 require __DIR__ . '/auth.php';
