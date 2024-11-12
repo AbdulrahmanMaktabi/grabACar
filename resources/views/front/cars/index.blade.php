@@ -60,6 +60,8 @@
                                                 href="{{ route('front.car.show', ['car' => $car]) }}"><i
                                                     class="bx bx-show-alt me-1"></i>
                                                 Show</a>
+                                            <a class="dropdown-item" href="#"><i class="bx bx-show-alt me-1"></i>
+                                                {{ $car->name }}</a>
                                             <a class="dropdown-item"
                                                 href="{{ route('front.car.edit', ['car' => $car]) }}"><i
                                                     class="bx bx-edit-alt me-1"></i>
@@ -71,7 +73,7 @@
                                                 <a class="dropdown-item" href="javascript:void(0);"
                                                     onclick="document.getElementById('deleteForm').submit();">
                                                     <i class="bx bx-trash me-1"></i>
-                                                    Delete
+                                                    Delete {{ $car->name }}
                                                 </a>
                                             </form>
 

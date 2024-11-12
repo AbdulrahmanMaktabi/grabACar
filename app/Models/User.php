@@ -12,10 +12,12 @@ use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
 use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletes;
+
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, Notifiable, HasSlug, HasRoles;
+    use HasApiTokens, HasFactory, Notifiable, HasSlug, HasRoles, SoftDeletes;
 
     protected $table = 'users';
 
