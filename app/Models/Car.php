@@ -72,4 +72,16 @@ class Car extends Model implements HasMedia
     {
         return $this->belongsTo(fuel::class, 'fuel_id');
     }
+
+    // Accessors
+    public function getPriceAttribute($value)
+    {
+        return $value . " $";
+    }
+
+    // Mutator
+    protected function setPriceAttribute($value)
+    {
+        $this->attributes['price'] = str_replace('$', '', $value);
+    }
 }
