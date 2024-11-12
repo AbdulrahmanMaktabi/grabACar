@@ -135,7 +135,7 @@ class UserController extends Controller
             // remove the roles from the account
             $user->syncRoles(['']);
             // delete the account
-            $user->delete();
+            $user->softDeletes();
             return redirect()->route('back.user.index');
         } else {
             return abort(404);
