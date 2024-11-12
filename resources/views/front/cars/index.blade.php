@@ -67,11 +67,11 @@
                                                     class="bx bx-edit-alt me-1"></i>
                                                 Edit</a>
                                             <form action="{{ route('front.car.destroy', ['car' => $car]) }}" method="post"
-                                                id="deleteForm">
+                                                id="deleteForm-{{ $car->name }}">
                                                 @csrf
                                                 @method('delete')
                                                 <a class="dropdown-item" href="javascript:void(0);"
-                                                    onclick="document.getElementById('deleteForm').submit();">
+                                                    onclick="document.getElementById('deleteForm-{{ $car->name }}').submit();">
                                                     <i class="bx bx-trash me-1"></i>
                                                     Delete {{ $car->name }}
                                                 </a>

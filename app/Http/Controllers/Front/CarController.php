@@ -153,7 +153,7 @@ class CarController extends Controller
      */
     public function destroy(Car $car)
     {
-        dd($car->name);
+        // dd($car->name);
         if (isSameUser('web', $car->user->id)) {
             $car->delete();
             return redirect()->route('front.car.index');
