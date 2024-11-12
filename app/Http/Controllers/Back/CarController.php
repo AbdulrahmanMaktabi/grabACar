@@ -33,7 +33,7 @@ class CarController extends Controller
      */
     public function index()
     {
-        $cars = Car::paginate(5);
+        $cars = Car::withTrashed()->paginate(5);
         return view('back.cars.index', get_defined_vars());
     }
 
