@@ -155,7 +155,7 @@ class CarController extends Controller
     {
         // dd($car->name);
         if (isSameUser('web', $car->user->id)) {
-            $car->softDeletes();
+            $car->delete();
             return redirect()->route('front.car.index');
         }
         return redirect()->route('front.car.index');
