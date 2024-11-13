@@ -76,6 +76,16 @@
                                                     Restore
                                                 </a>
                                             </form>
+                                            <form action="{{ route('back.forceDeleteCar', ['car' => $car]) }}"
+                                                method="post" id="forceDeleteForm-{{ $car->name }}">
+                                                @csrf
+                                                @method('delete')
+                                                <a class="dropdown-item" href="javascript:void(0);"
+                                                    onclick="document.getElementById('forceDeleteForm-{{ $car->name }}').submit();">
+                                                    <i class="bx bx-trash me-1"></i>
+                                                    Force Delete
+                                                </a>
+                                            </form>
                                         @else
                                             <form action="{{ route('back.car.destroy', ['car' => $car]) }}" method="post"
                                                 id="deleteForm-{{ $car->name }}">

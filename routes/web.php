@@ -3,6 +3,7 @@
 use App\Http\Controllers\Back\AdminController;
 use App\Http\Controllers\Back\BackHomeController;
 use App\Http\Controllers\Back\CarController;
+use App\Http\Controllers\Back\ForceDeleteCar;
 use App\Http\Controllers\Back\RestoreDeletedCar;
 use App\Http\Controllers\Back\RoleController;
 use App\Http\Controllers\Back\UserController;
@@ -51,7 +52,8 @@ Route::prefix('back')
         Route::resource('user', UserController::class)->middleware('admin');
         Route::resource('role', RoleController::class)->middleware('admin');
         Route::resource('car', CarController::class)->middleware('admin');
-        Route::post('/test/{car}', [RestoreDeletedCar::class, 'restore'])->name('restoreCar');
+        Route::post('/car/restore/{car}', [RestoreDeletedCar::class, 'restore'])->name('restoreCar');
+        Route::delete('/car/force/delete/{car}', [ForceDeleteCar::class, 'force'])->name('forceDeleteCar');
         require __DIR__ . '/adminAuth.php';
     });
 
