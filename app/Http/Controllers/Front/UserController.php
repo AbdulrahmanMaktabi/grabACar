@@ -46,7 +46,7 @@ class UserController extends Controller
             $favoriteCarsID = $favorites->pluck('car_id')->toArray();
 
             // Get the cars associated with the favorite car IDs from the Car model
-            $cars = Car::whereIn('id', $favoriteCarsID)->paginate(5);
+            $cars = Car::whereIn('id', $favoriteCarsID)->whereNull('deleted_at')->paginate(5);
             return view('front.users.profile', get_defined_vars());
         }
 

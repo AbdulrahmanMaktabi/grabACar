@@ -41,7 +41,7 @@
                 </div>
                 <!-- /Account -->
             </div>
-            @if (isset($cars))
+            @if (isset($cars) && count($cars) > 0)
                 <div class="card mb-4">
                     <h5 class="card-header">Faveroite Cars</h5>
                     <!-- Cars -->

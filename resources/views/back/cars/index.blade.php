@@ -76,7 +76,10 @@
                                                 Delete
                                             </a>
                                         </form>
-
+                                        @if ($car->deleted_at)
+                                            <a class="dropdown-item" href="#"><i class="bx bx-redo me-1"></i>
+                                                Restore</a>
+                                        @endif
                                     </div>
                                 </div>
                             </td>
