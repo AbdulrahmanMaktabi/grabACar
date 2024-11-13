@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Car;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Foundation\Support\Providers\RouteServiceProvider as ServiceProvider;
 use Illuminate\Http\Request;
@@ -36,6 +37,11 @@ class RouteServiceProvider extends ServiceProvider
 
             Route::middleware('web')
                 ->group(base_path('routes/web.php'));
+        });
+
+        // select * from cars where slug = 'Noah Preston' and cars.deleted_at is null limit 1
+        Route::bind('car', function ($value) {
+            return Car::withTrashed()->where('slug', $value)->firstOrFail();
         });
     }
 }

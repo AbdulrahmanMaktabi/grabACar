@@ -3,6 +3,7 @@
 use App\Http\Controllers\Back\AdminController;
 use App\Http\Controllers\Back\BackHomeController;
 use App\Http\Controllers\Back\CarController;
+use App\Http\Controllers\Back\RestoreDeletedCar;
 use App\Http\Controllers\Back\RoleController;
 use App\Http\Controllers\Back\UserController;
 use App\Http\Controllers\Front\CarController as FrontCarController;
@@ -11,6 +12,7 @@ use App\Http\Controllers\Front\UserController as FrontUserController;
 use App\Http\Controllers\Front\AllCarController;
 use App\Http\Controllers\Front\FavoriteCarsController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Car;
 use App\Models\Models;
 use Illuminate\Support\Facades\Route;
 
@@ -49,6 +51,7 @@ Route::prefix('back')
         Route::resource('user', UserController::class)->middleware('admin');
         Route::resource('role', RoleController::class)->middleware('admin');
         Route::resource('car', CarController::class)->middleware('admin');
+        Route::post('/test/{car}', [RestoreDeletedCar::class, 'restore'])->name('restoreCar');
         require __DIR__ . '/adminAuth.php';
     });
 

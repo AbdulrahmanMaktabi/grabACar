@@ -66,19 +66,27 @@
                                         <a class="dropdown-item" href="{{ route('back.car.edit', ['car' => $car]) }}"><i
                                                 class="bx bx-edit-alt me-1"></i>
                                             Edit</a>
-                                        <form action="{{ route('back.car.destroy', ['car' => $car]) }}" method="post"
-                                            id="deleteForm-{{ $car->name }}">
-                                            @csrf
-                                            @method('delete')
-                                            <a class="dropdown-item" href="javascript:void(0);"
-                                                onclick="document.getElementById('deleteForm-{{ $car->name }}').submit();">
-                                                <i class="bx bx-trash me-1"></i>
-                                                Delete
-                                            </a>
-                                        </form>
                                         @if ($car->deleted_at)
-                                            <a class="dropdown-item" href="#"><i class="bx bx-redo me-1"></i>
-                                                Restore</a>
+                                            <form action="{{ route('back.restoreCar', ['car' => $car]) }}" method="post"
+                                                id="restoreForm-{{ $car->name }}">
+                                                @csrf
+                                                <a class="dropdown-item" href="javascript:void(0);"
+                                                    onclick="document.getElementById('restoreForm-{{ $car->name }}').submit();">
+                                                    <i class="bx bx-redo me-1"></i>
+                                                    Restore
+                                                </a>
+                                            </form>
+                                        @else
+                                            <form action="{{ route('back.car.destroy', ['car' => $car]) }}" method="post"
+                                                id="deleteForm-{{ $car->name }}">
+                                                @csrf
+                                                @method('delete')
+                                                <a class="dropdown-item" href="javascript:void(0);"
+                                                    onclick="document.getElementById('deleteForm-{{ $car->name }}').submit();">
+                                                    <i class="bx bx-trash me-1"></i>
+                                                    Delete
+                                                </a>
+                                            </form>
                                         @endif
                                     </div>
                                 </div>
