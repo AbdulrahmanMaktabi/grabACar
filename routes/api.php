@@ -1,6 +1,8 @@
 <?php
 
-use App\Http\Controllers\Api\TestController;
+use App\Http\Controllers\Api\CarController;
+use App\Http\Controllers\Api\RoleController;
+use App\Http\Controllers\Api\PermissionController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -19,4 +21,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/cars', TestController::class);
+// Cars Model
+Route::get('cars', CarController::class);
+// Roles Model
+Route::get('roles',  RoleController::class);
+// Permissions Model
+Route::get('permissions', [PermissionController::class, 'index']);
+Route::get('permissions/{roleID}', [PermissionController::class, 'permissionsBasedOnRole']);

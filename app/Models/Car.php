@@ -80,6 +80,11 @@ class Car extends Model implements HasMedia
         return $value . " $";
     }
 
+    public function getMileageAttribute($value)
+    {
+        return $value . " KM";
+    }
+
     // Mutator
     protected function setPriceAttribute($value)
     {
