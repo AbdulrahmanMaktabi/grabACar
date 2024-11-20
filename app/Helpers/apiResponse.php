@@ -4,7 +4,7 @@ namespace App\Helplers;
 
 class ApiResponse
 {
-    static function sendResponse($code = 200, $msg = null, $data = null, $links = null, $meta = null)
+    static function sendResponse($code = 200, $msg = [], $data = [], $links = [], $meta = [])
     {
         $response = [
             'code' => $code,

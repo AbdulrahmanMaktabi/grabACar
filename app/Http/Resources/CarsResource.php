@@ -23,6 +23,7 @@ class CarsResource extends JsonResource
             'Year' => $this->year,
             'Description' => $this->description,
             'Price' => $this->price,
+            'Images' => ['Image' => $this->getFirstMediaUrl('images')],
         ];
     }
 }
