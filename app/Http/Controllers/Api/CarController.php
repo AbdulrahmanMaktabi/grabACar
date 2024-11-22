@@ -11,12 +11,12 @@ use Illuminate\Support\Facades\DB;
 
 class CarController extends Controller
 {
+
     /**
      * Get All Available Cars
      */
     public function index(Request $request)
     {
-
         $perPage = $request->get('per_page', 5);
 
         $cars = Car::withTrashed()->paginate($perPage);
@@ -62,13 +62,29 @@ class CarController extends Controller
     }
 
     /**
+     * Get Cars with Specific User
+     */
+    public function userCars($userID)
+    {
+        $cars = Car::withTrashed()
+            ->where('owner_id', $userID)
+            ->get();
+
+        if (!$cars) {
+            return ApiResponse::sendResponse(422, 'No Cars Found for user');
+        }
+
+        $data = ['data' => CarsResource::collection($cars)];
+        return ApiResponse::sendResponse(200, 'Cars Found', $data);
+    }
+
+    /**
      * Create New Car
      */
     public function create(Request $request)
     {
         $validated = $request->validate([
             "name" => ["required", "string"],
-            "owner_id" => ["required", "exists:users,id"],
             "marker_id" => ["required", "exists:markers,id"],
             "model_id" => ["required", "exists:models,id"],
             "carType_id" => ["required", "exists:car_types,id"],
@@ -82,6 +98,8 @@ class CarController extends Controller
             'description' => ['required', 'string'],
             'car_specifications' => ['required', 'string'],
         ]);
+
+        $validated['owner_id'] = $request->user()->id;
 
         $car = Car::create(collect($validated)->except('image')->toArray());
 
@@ -97,15 +115,17 @@ class CarController extends Controller
      */
     public function update(Request $request, $carID)
     {
-        $car = Car::withTrashed()->find($carID);
+        $car = Car::withTrashed()
+            ->where('id', $carID)
+            ->where('owner_id', $request->user()->id)
+            ->first();
 
         if (!$car) {
-            return ApiResponse::sendResponse(422, 'Car not found');
+            return ApiResponse::sendResponse(422, 'Car not found or you are not allowed to update');
         }
 
         $validated = $request->validate([
             "name" => ["nullable", "string"],
-            "owner_id" => ["nullable", "exists:users,id"],
             "marker_id" => ["nullable", "exists:markers,id"],
             "model_id" => ["nullable", "exists:models,id"],
             "carType_id" => ["nullable", "exists:car_types,id"],
@@ -120,6 +140,8 @@ class CarController extends Controller
             'car_specifications' => ['nullable', 'string'],
         ]);
 
+        $validated['owner_id'] = $request->user()->id;
+
         $car->update(collect($validated)->except('image')->toArray());
 
         if ($request->hasFile('image')) {
@@ -128,5 +150,42 @@ class CarController extends Controller
         }
 
         if ($car) return ApiResponse::sendResponse(200, 'Car updated successfully', ['data' => new CarsResource($car)]);
+    }
+
+    /**
+     * Delete Specefic Car
+     */
+    public function destroy(Request $request, $carID)
+    {
+        $car = Car::withTrashed()
+            ->where('id', $carID)
+            ->where('owner_id', $request->user()->id)
+            ->first();
+
+        if (!$car) {
+            return ApiResponse::sendResponse(422, 'Car not found or you are not allowed to delete');
+        }
+
+        $car->delete();
+
+        if ($car) return ApiResponse::sendResponse(200, 'Car deleted successfully');
+    }
+    /**
+     * Force Delete Specefic Car
+     */
+    public function forceDestroy(Request $request, $carID)
+    {
+        $car = Car::withTrashed()
+            ->where('id', $carID)
+            ->where('owner_id', $request->user()->id)
+            ->first();
+
+        if (!$car) {
+            return ApiResponse::sendResponse(422, 'Car not found or you are not allowed to delete');
+        }
+
+        $car->forceDelete();
+
+        if ($car) return ApiResponse::sendResponse(200, 'Car deleted successfully');
     }
 }

@@ -19,13 +19,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 // ======================================== Car Routes
-Route::prefix('cars')->group(function () {
-    Route::get('/', [CarController::class, 'index']); // Get all cars
-    Route::get('/show/{carID}', [CarController::class, 'show']); // Get specific car
-    Route::post('/create', [CarController::class, 'create']); // Create a new car
-    Route::post('/edit/{carID}', [CarController::class, 'update']); // Edit a specefic car
-    // Add more car-related routes if needed, e.g., show, create, update, delete
-});
+Route::prefix('cars')
+    ->controller(CarController::class)
+    ->group(function () {
+        Route::get('/', 'index'); // Get all cars
+        Route::get('/show/{carID}',  'show'); // Get specific car
+        Route::get('/user/{userID}',  'userCars'); // Get cars based on specific user  
+        // Must Auth Routes
+        Route::middleware('auth:sanctum')->group(function () {
+            Route::post('/create', 'create'); // Create a new car
+            Route::post('/edit/{carID}',  'update'); // Edit a specefic car
+            Route::delete('/delete/{carID}',  'destroy'); // Delete a specefic car
+            Route::delete('/delete/force/{carID}',  'forceDestroy'); // Force Delete a specefic car
+        });
+        // Add more car-related routes if needed, e.g., show, create, update, delete
+    });
 
 // ======================================== Role Routes
 Route::prefix('roles')->group(function () {
