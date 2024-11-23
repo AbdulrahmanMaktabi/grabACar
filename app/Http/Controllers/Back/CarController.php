@@ -49,7 +49,7 @@ class CarController extends Controller
             'date' => now()->toDateTimeString(),
         ]);
 
-        $cars = Car::withTrashed()->paginate(5);
+        $cars = Car::withTrashed()->with(['user', 'marker', 'model', 'carType', 'fuel', 'media'])->paginate(5);
         return view('back.cars.index', get_defined_vars());
     }
 
