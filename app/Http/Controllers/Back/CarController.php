@@ -13,6 +13,8 @@ use App\Models\Models;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Log;
+
 
 class CarController extends Controller
 {
@@ -33,6 +35,14 @@ class CarController extends Controller
      */
     public function index()
     {
+        // Log the activity to the car.log file.
+        Log::channel('car')->info('[Back] - Listing of the resource ...', [
+            'user' => Auth::guard('admin')->user()->only(['id', 'name']),
+            'ip' => request()->ip(),
+            'user_agent' => request()->header('User-Agent'),
+            'date' => now()->format('Y-m-d H:i:s'),
+        ]);
+
         $cars = Car::withTrashed()->paginate(5);
         return view('back.cars.index', get_defined_vars());
     }
@@ -55,6 +65,14 @@ class CarController extends Controller
      */
     public function store(StoreCarRequest $request)
     {
+        // Log the new resource 
+        Log::channel('car')->info('[Back] - Creating a new resource ...', [
+            'user' => Auth::guard('admin')->user()->only(['id', 'name']),
+            'ip' => request()->ip(),
+            'user_agent' => request()->header('User-Agent'),
+            'date' => now()->format('Y-m-d H:i:s'),
+        ]);
+
         $data = $request->validated();
 
         $car = Car::create([
@@ -105,6 +123,15 @@ class CarController extends Controller
      */
     public function update(UpdateCarRequest $request, Car $car)
     {
+        // Log the update resource 
+        Log::channel('car')->info('[Back] - Update resource ...', [
+            'car' => $car->only(['id', 'name']),
+            'user' => Auth::guard('admin')->user()->only(['id', 'name']),
+            'ip' => request()->ip(),
+            'user_agent' => request()->header('User-Agent'),
+            'date' => now()->format('Y-m-d H:i:s'),
+        ]);
+
         $data = $request->validated();
 
         $car->update([
@@ -136,6 +163,14 @@ class CarController extends Controller
      */
     public function destroy(Car $car)
     {
+        // Log the Delete resource 
+        Log::channel('car')->info('[Back] - Delete resource ...', [
+            'car' => $car->only(['id', 'name']),
+            'user' => Auth::guard('admin')->user()->only(['id', 'name']),
+            'ip' => request()->ip(),
+            'user_agent' => request()->header('User-Agent'),
+            'date' => now()->format('Y-m-d H:i:s'),
+        ]);
         $car->delete();
 
         return redirect()->route('back.car.index');
