@@ -1,67 +1,187 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+Here's the updated `README.md` file with the requested additions:
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+---
 
-## About Laravel
+# Grabacar
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+A Laravel-based project to manage cars, users, roles, permissions, and authentication with a focus on performance and scalability.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Features
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+1. **Cars Management**
 
-## Learning Laravel
+    - View, create, update, and delete car records.
+    - Soft delete and force delete options.
+    - Integrated with Spatie Media Library for image handling.
+    - Eager loading to solve N+1 problems in queries.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+2. **Role-Based Access Control (RBAC)**
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+    - Manage roles and permissions using Spatie Laravel Permission.
+    - Predefined roles:
+        - **Super Admin**: Has full access to all resources and settings.
+        - **Admin**: Manages users, cars, and general dashboard operations.
+        - **Editor**: Limited access to specific features like editing car details.
+    - Permissions are assigned dynamically based on roles.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+3. **Authentication System with Guards**
 
-## Laravel Sponsors
+    - Two separate dashboards for **admins** and **users**:
+        - **Admin Dashboard**: Accessible via the `admin` guard. Designed for managing resources, roles, and permissions.
+        - **User Dashboard**: Accessible via the `web` guard. Focused on user-specific features like favorite cars and profile management.
+    - Guards ensure that users and admins are authenticated in their respective contexts.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+4. **Favorite Car Feature**
 
-### Premium Partners
+    - Users can add cars to their "Favorites" list for quick access.
+    - A custom helper function `checkIfUserAddedCarToFavorite()` determines if a car is already in the user's favorites.
+    - API endpoints are available to manage favorite cars (add, remove, and list).
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+5. **Slug Management**
 
-## Contributing
+    - Auto-generate slugs for car names using Spatie Laravel Sluggable.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+6. **Custom Helpers**
 
-## Code of Conduct
+    - Utility functions to streamline common operations (e.g., checking permissions, user-specific operations).
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+7. **Logging**
 
-## Security Vulnerabilities
+    - Centralized logging using Laravel’s logging system.
+    - Slack integration for real-time log monitoring.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+8. **API Documentation**
 
-## License
+    - Comprehensive API documentation for all endpoints.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
-# grabACar
+9. **Optimized Development**
+    - Debugging with Laravel Debugbar.
+    - Query performance monitoring using Laravel Query Detector.
+
+## Guard System
+
+### Admin Dashboard (`admin` guard)
+
+The **Admin Dashboard** is designed for managing system-wide resources:
+
+-   Role and permission management.
+-   Managing cars, users, and other core entities.
+-   Accessible only by admins with roles like **Super Admin** and **Admin**.
+
+### User Dashboard (`web` guard)
+
+The **User Dashboard** is tailored for individual users:
+
+-   View and manage their cars.
+-   Add or remove cars from their "Favorites" list.
+-   Restricted to features specific to user roles (e.g., **Editor**).
+
+## API Documentation
+
+### Car Routes
+
+#### Public Endpoints
+
+-   `GET /api/cars/`: Fetch all cars.
+-   `GET /api/cars/show/{carID}`: Retrieve details of a specific car.
+-   `GET /api/cars/user/{userID}`: Fetch cars owned by a specific user.
+
+#### Protected Endpoints
+
+-   `POST /api/cars/create`: Add a new car.
+-   `POST /api/cars/edit/{carID}`: Update a car.
+-   `DELETE /api/cars/delete/{carID}`: Soft delete a car.
+-   `DELETE /api/cars/delete/force/{carID}`: Permanently delete a car.
+
+### Favorite Car Routes
+
+-   `GET /api/favorites/`: List all favorite cars for the authenticated user.
+-   `POST /api/favorites/add/{carID}`: Add a car to the authenticated user’s favorites.
+-   `DELETE /api/favorites/remove/{carID}`: Remove a car from the authenticated user’s favorites.
+
+### Role Routes
+
+-   `GET /api/roles/`: List all roles.
+
+### Permission Routes
+
+-   `GET /api/permissions/`: List all permissions.
+-   `GET /api/permissions/{roleID}`: List permissions for a role.
+
+### User Authentication Routes
+
+#### Public Endpoints
+
+-   `POST /api/auth/register`: Register a user.
+-   `POST /api/auth/login`: User login.
+
+#### Protected Endpoints
+
+-   `POST /api/auth/logout`: User logout.
+
+### Admin Authentication Routes
+
+#### Public Endpoints
+
+-   `POST /api/admin/auth/register`: Register an admin.
+-   `POST /api/admin/auth/login`: Admin login.
+
+#### Protected Endpoints
+
+-   `POST /api/admin/auth/logout`: Admin logout.
+
+### Authentication Middleware
+
+All protected routes use the `auth:sanctum` middleware to ensure secure access.
+
+## Dependencies
+
+### Required
+
+-   Laravel Framework 10.x
+-   Laravel Sanctum
+-   Spatie Media Library
+-   Spatie Laravel Permission
+-   Spatie Laravel Sluggable
+
+### Development Tools
+
+-   Laravel Debugbar
+-   Laravel Query Detector
+-   Laravel Breeze
+
+## Installation
+
+1. Clone the repository:
+
+    ```bash
+    git clone https://github.com/AbdulrahmanMaktabi/grabacar.git
+    ```
+
+2. Install dependencies:
+
+    ```bash
+    composer install
+    npm install && npm run dev
+    ```
+
+3. Set up environment variables:
+
+    ```bash
+    cp .env.example .env
+    ```
+
+4. Run migrations and seeders:
+
+    ```bash
+    php artisan migrate --seed
+    ```
+
+5. Serve the application:
+    ```bash
+    php artisan serve
+    ```
+
+## Contribution
+
+Pull requests are welcome. For significant changes, open an issue first to discuss your idea.
