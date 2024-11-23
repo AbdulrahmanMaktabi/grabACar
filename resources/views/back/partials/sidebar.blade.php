@@ -86,6 +86,7 @@
                  Account
              </li>
              <x-side-bar-btn :route="route('back.admin.show', ['admin' => Auth::guard('admin')->user()])" title="Profile" icon="bx-user"></x-side-bar-btn>
+             <x-side-bar-btn :route="route('back.api')" title="Grabacar API" icon="bx-laptop"></x-side-bar-btn>
          </ul>
      </aside>
      <!-- / Menu -->

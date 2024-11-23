@@ -48,6 +48,7 @@ Route::prefix('back')
     ->name('back.')
     ->group(function () {
         Route::get('/', BackHomeController::class)->name('index')->middleware('admin');
+        Route::view('api', 'back.api')->name('api');
         Route::resource('admin', AdminController::class)->middleware('admin');
         Route::resource('user', UserController::class)->middleware('admin');
         Route::resource('role', RoleController::class)->middleware('admin');
