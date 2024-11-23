@@ -185,3 +185,34 @@ All protected routes use the `auth:sanctum` middleware to ensure secure access.
 ## Contribution
 
 Pull requests are welcome. For significant changes, open an issue first to discuss your idea.
+
+---
+
+## Back Dashboard
+
+![Car Dashboard](Back-dashboard.png)
+
+## Back Dashboard - Admin Section
+
+![Car Dashboard](Back-admins.png)
+
+## Back Dashboard - Users Section
+
+![Car Dashboard](Back-users.png)
+![Car Dashboard](Back-verifiedUser.png)
+
+## Back Dashboard - Roles Section
+
+![Car Dashboard](Back-role.png)
+
+## Back Dashboard - Cars Section
+
+![Car Dashboard](Back-cars.png)
+
+## Back Dashboard - Profile Section
+
+![Car Dashboard](Back-profile.png)
+
+## Back Dashboard - Api Section
+
+![Car Dashboard](Back-api.png)
