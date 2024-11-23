@@ -35,12 +35,18 @@ class CarController extends Controller
      */
     public function index()
     {
-        // Log the activity to the car.log file.
-        Log::channel('car')->info('[Back] - Listing of the resource ...', [
+        // // Log the activity to the car.log file.
+        // Log::channel('car')->info('[Back] - Listing of the resource ...', [
+        //     'user' => Auth::guard('admin')->user()->only(['id', 'name']),
+        //     'ip' => request()->ip(),
+        //     'user_agent' => request()->header('User-Agent'),
+        //     'date' => now()->format('Y-m-d H:i:s'),
+        // ]);
+
+        // Using slack
+        Log::channel('slack')->info('[Back] - Listing of the Cars resource ...', [
             'user' => Auth::guard('admin')->user()->only(['id', 'name']),
-            'ip' => request()->ip(),
-            'user_agent' => request()->header('User-Agent'),
-            'date' => now()->format('Y-m-d H:i:s'),
+            'date' => now()->toDateTimeString(),
         ]);
 
         $cars = Car::withTrashed()->paginate(5);
@@ -65,13 +71,13 @@ class CarController extends Controller
      */
     public function store(StoreCarRequest $request)
     {
-        // Log the new resource 
-        Log::channel('car')->info('[Back] - Creating a new resource ...', [
-            'user' => Auth::guard('admin')->user()->only(['id', 'name']),
-            'ip' => request()->ip(),
-            'user_agent' => request()->header('User-Agent'),
-            'date' => now()->format('Y-m-d H:i:s'),
-        ]);
+        // // Log the new resource 
+        // Log::channel('car')->info('[Back] - Creating a new resource ...', [
+        //     'user' => Auth::guard('admin')->user()->only(['id', 'name']),
+        //     'ip' => request()->ip(),
+        //     'user_agent' => request()->header('User-Agent'),
+        //     'date' => now()->format('Y-m-d H:i:s'),
+        // ]);
 
         $data = $request->validated();
 
@@ -93,6 +99,13 @@ class CarController extends Controller
         ]);
 
         $car->addMediaFromRequest('image')->toMediaCollection('images');
+
+        // Logging using slack
+        Log::channel('slack')->info('[Back] - Creating a new car ...', [
+            'user' => Auth::guard('admin')->user()->only(['id', 'name']),
+            'car' => $car,
+            'date' => now()->toDateTimeString(),
+        ]);
 
         return redirect()->route('back.car.index');
     }
