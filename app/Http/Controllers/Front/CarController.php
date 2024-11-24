@@ -12,6 +12,8 @@ use App\Models\Marker;
 use App\Models\Models;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
 
 class CarController extends Controller
 {
@@ -37,15 +39,11 @@ class CarController extends Controller
      */
     public function index()
     {
-        $authUser = Auth::guard('web')->user();
+        $cars = Car::where('owner_id', Auth::id())
+            ->with(['user', 'marker', 'model', 'carType', 'fuel', 'media'])
+            ->paginate(5);
 
-        if (!$authUser) {
-            return redirect()->route('login');
-        }
-
-        $cars = Car::with('model')->where('owner_id', $authUser->id)->paginate(5);
-
-        return view('front.cars.index', get_defined_vars());
+        return view('front.cars.index', compact('cars'));
     }
 
     /**

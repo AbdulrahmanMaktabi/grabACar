@@ -90,4 +90,9 @@ class Car extends Model implements HasMedia
     {
         $this->attributes['price'] = str_replace('$', '', $value);
     }
+
+    protected function setMileageAttribute($value)
+    {
+        $this->attributes['mileage'] = str_replace(' KM', '', $value);
+    }
 }

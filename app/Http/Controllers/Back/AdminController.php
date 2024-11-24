@@ -27,7 +27,7 @@ class AdminController extends Controller
     public function index()
     {
 
-        $admins = Admin::paginate(5);
+        $admins = Admin::with('roles')->paginate(5);
         return view('back.admins.index', get_defined_vars());
     }
 
@@ -63,12 +63,17 @@ class AdminController extends Controller
      */
     public function show(Admin $admin)
     {
-        // check if the user is seem to be logged in
+        // Check if the logged-in user matches the provided admin
         if (Auth::guard('admin')->user()->id != $admin->id) {
             return redirect()->route('back.index');
         }
-        return view('back.admins.profile', get_defined_vars());
+
+        // Eager load relationships (e.g., roles) to avoid N+1 queries
+        $admin->load('roles', 'permissions'); // Add relevant relationships
+
+        return view('back.admins.profile', compact('admin'));
     }
+
 
     /**
      * Show the form for editing the specified resource.

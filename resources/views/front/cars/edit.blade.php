@@ -109,7 +109,7 @@
                     <div class="row my-4">
                         <div class="col-md-6">
                             <label for="price" class="form-label">Price</label>
-                            <input type="number" class="form-control" id="price" placeholder="900 $"
+                            <input type="text" class="form-control" id="price" placeholder="900 $"
                                 aria-describedby="defaultFormControlHelp" name="price" value="{{ $car->price }}" />
                             <x-input-error :messages="$errors->get('price')" class="mt-2" />
                         </div>
@@ -123,7 +123,7 @@
                     <div class="row my-4">
                         <div class="col-md-6">
                             <label for="mileage" class="form-label">Mileage</label>
-                            <input type="number" class="form-control" id="mileage" placeholder="60000 km"
+                            <input type="text" class="form-control" id="mileage" placeholder="60000 km"
                                 aria-describedby="defaultFormControlHelp" name="mileage" value="{{ $car->mileage }}" />
                             <x-input-error :messages="$errors->get('mileage')" class="mt-2" />
                         </div>
@@ -157,7 +157,7 @@
                     @endif
                     <div class="row my-5">
                         <div class="col-md-4">
-                            <input type="submit" value="Update" class="btn btn-primary">
+                            <input type="submit" value="Edit" class="btn btn-primary">
                         </div>
                     </div>
                 </form>

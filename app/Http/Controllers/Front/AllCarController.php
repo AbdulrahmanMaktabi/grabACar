@@ -13,7 +13,7 @@ class AllCarController extends Controller
      */
     public function __invoke(Request $request)
     {
-        $cars = Car::with('model')->paginate(5);
+        $cars = Car::with(['user', 'marker', 'model', 'carType', 'fuel', 'media'])->paginate(5);
         return view('front.cars.all', get_defined_vars());
     }
 }
