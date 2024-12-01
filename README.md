@@ -1,7 +1,3 @@
-Here's the updated `README.md` file with the requested additions:
-
----
-
 # Grabacar
 
 A Laravel-based project to manage cars, users, roles, permissions, and authentication with a focus on performance and scalability.

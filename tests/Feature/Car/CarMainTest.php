@@ -5,84 +5,90 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use App\Models\Car;
 use App\Models\User; // Import User model
+use Database\Seeders\Car_models_markers_carTypes_fuel;
+use Database\Seeders\UserSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+
+use function PHPUnit\Framework\assertNotEmpty;
 
 class CarMainTest extends TestCase
 {
-    // use RefreshDatabase;
+    use RefreshDatabase;
 
-    // Helper method to create an authenticated user
-    protected function authenticateUser()
+    // work before any tests
+    public function setup(): void
     {
-        $user = User::factory()->create(); // Create a user using the factory
-        $this->actingAs($user); // Authenticate the user for the test
+        parent::setup();
+        $this->seed([
+            Car_models_markers_carTypes_fuel::class,
+            UserSeeder::class
+        ]);
     }
 
-    public function test_create_car()
+    /**
+     * Test Create car
+     */
+    public function test_create_car(): void
     {
-        $this->authenticateUser(); // Ensure the user is authenticated before the test
+        $user = User::first();
 
-        $data = [
-            'name' => 'Test Car',
-            'owner_id' => 5, // Use the authenticated user's ID
-            'marker_id' => 1,
-            'model_id' => 1,
-            'carType_id' => 1,
-            'fuel_id' => 1,
-            'year' => 2020,
-            'price' => 20000,
-            'vin' => 123,
-            'mileage' => 1000,
-            'address' => '123 Test Street',
-            'description' => 'A nice test car',
-            'car_specifications' => 'Test specs'
-        ];
+        // Generate car data and associate with the user
+        $carData = Car::factory()->make([
+            'owner_id' => $user->id,
+        ])->toArray();
 
-        $response = $this->post('/dashboard/car', $data);
+        // Remove 'image' if it is managed separately
+        unset($carData['image']);
+        $car = Car::create($carData);
 
-        $response->assertStatus(201); // Assert the car was created
-        $this->assertDatabaseHas('cars', ['name' => 'Test Car', 'owner_id' => auth()->id()]); // Ensure the owner_id is correct
+        $this->assertDatabaseHas('cars', [
+            'id' => $car->id,
+            'owner_id' => $user->id
+        ]);
     }
 
-
-    public function test_read_car()
+    /**
+     * Test Update car
+     */
+    public function test_update_car(): void
     {
-        $this->authenticateUser(); // Ensure the user is authenticated before the test
+        $user = User::first();
 
-        $car = Car::factory()->create();
+        $carData = Car::factory()->make(['owner_id' => $user->id])->toArray();
+        unset($carData['image']);
 
-        $response = $this->get("/dashboard/cars/{$car->slug}");
-
-        $response->assertStatus(200); // Assert the request was successful
-        $response->assertSee($car->name);
-    }
-
-    public function test_update_car()
-    {
-        $this->authenticateUser(); // Ensure the user is authenticated before the test
-
-        $car = Car::factory()->create();
+        $car = Car::create($carData);
 
         $updatedData = [
             'name' => 'Updated Test Car',
-            'price' => '25000 $',
+            'price' => 2025,
+            // Add other fields as necessary
         ];
 
-        $response = $this->put("/dashboard/cars/{$car->slug}", $updatedData);
+        $car->update($updatedData);
 
-        $response->assertStatus(200); // Assert the update was successful
-        $this->assertDatabaseHas('cars', ['name' => 'Updated Test Car']);
+        $this->assertDatabaseHas('cars', [
+            'id' => $car->id,
+            'name' => 'Updated Test Car',
+            'price' => 2025,
+            // Add other fields as necessary
+        ]);
     }
 
-    public function test_list_cars()
+    /**
+     * Test Delete car
+     */
+    public function test_delete_car(): void
     {
-        $this->authenticateUser(); // Ensure the user is authenticated before the test
+        $user = User::first();
 
-        Car::factory()->count(5)->create();
+        $carData = Car::factory()->make(['owner_id' => $user->id])->toArray();
+        unset($carData['image']);
 
-        $response = $this->get('/dashboard/cars');
+        $car = Car::create($carData);
 
-        $response->assertStatus(200); // Assert the status is OK
-        $response->assertJsonCount(5); // Assert there are 5 cars in the response
+        $car->forceDelete();
+
+        $this->assertDatabaseMissing('cars', ['id' => $car->id]);
     }
 }

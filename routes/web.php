@@ -13,6 +13,7 @@ use App\Http\Controllers\Front\UserController as FrontUserController;
 use App\Http\Controllers\Front\AllCarController;
 use App\Http\Controllers\Front\FavoriteCarsController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TestController;
 use App\Models\Car;
 use App\Models\Models;
 use Illuminate\Support\Facades\Route;
@@ -27,6 +28,12 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+// Testing
+Route::get('/tags', [TestController::class, 'index']);
+Route::post('/tags', [TestController::class, 'store']);
+Route::get('/tags/{tag_id}', [TestController::class, 'show']);
+Route::put('/tags/{tag_id}', [TestController::class, 'update']);
+Route::delete('/tags/{tag_id}', [TestController::class, 'destroy']);
 
 Route::redirect('/', '/login');
 // Front Dashboard

@@ -24,22 +24,27 @@ class Car_models_markers_carTypes_fuel extends Seeder
             ['name' => 'Nissan'],
         ];
 
-        collect($markers)->map(function ($marker) {
-            Marker::create($marker);
-        });
+        $bmw = Marker::create(['name' => 'BMW']);
+        $audi = Marker::create(['name' => 'Audi']);
+        $toyota = Marker::create(['name' => 'Toyota']);
+        $nissan = Marker::create(['name' => 'Nissan']);
+
+        // collect($markers)->map(function ($marker) {
+        //     Marker::create($marker);
+        // });
 
         // Models
         $carModels = [
-            ['marker_id' => 1, 'name' => 'Mustang'],
-            ['marker_id' => 1, 'name' => 'Fiesta'],
-            ['marker_id' => 2, 'name' => '3-Series'],
-            ['marker_id' => 2, 'name' => 'X5'],
-            ['marker_id' => 3, 'name' => 'A6'],
-            ['marker_id' => 3, 'name' => 'Q7'],
-            ['marker_id' => 4, 'name' => 'Corolla'],
-            ['marker_id' => 4, 'name' => 'Camry'],
-            ['marker_id' => 5, 'name' => 'Altima'],
-            ['marker_id' => 5, 'name' => 'Sentra'],
+            ['marker_id' => $bmw->id, 'name' => 'Mustang'],
+            ['marker_id' => $bmw->id, 'name' => 'Fiesta'],
+            ['marker_id' => $audi->id, 'name' => '3-Series'],
+            ['marker_id' => $audi->id, 'name' => 'X5'],
+            ['marker_id' => $toyota->id, 'name' => 'A6'],
+            ['marker_id' => $toyota->id, 'name' => 'Q7'],
+            ['marker_id' => $nissan->id, 'name' => 'Corolla'],
+            ['marker_id' => $nissan->id, 'name' => 'Camry'],
+            ['marker_id' => $nissan->id, 'name' => 'Altima'],
+            ['marker_id' => $nissan->id, 'name' => 'Sentra'],
         ];
         collect($carModels)->map(function ($carModel) {
             Models::create($carModel);
