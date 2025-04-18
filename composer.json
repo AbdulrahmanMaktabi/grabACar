@@ -38,7 +38,7 @@
             "app/Helpers/checkWichModel.php",
             "app/Helpers/checkThePermission.php",
             "app/Helpers/checkIfUserAddedCarToFavorite.php",
-            "app/Helpers/apiResponse.php"
+            "app/Helpers/ApiResponse.php"
         ]
     },
     "autoload-dev": {

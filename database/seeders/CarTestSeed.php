@@ -22,6 +22,6 @@ class CarTestSeed extends Seeder
         Marker::factory()->count(5)->create();
 
         //create models for markers
-        Models::factory()->
+        Models::factory()->count(5)->create();
     }
 }
